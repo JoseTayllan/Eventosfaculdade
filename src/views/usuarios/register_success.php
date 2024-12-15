@@ -4,11 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro Bem-sucedido</title>
-    <link rel="stylesheet" href="../../public/css/style.css">
+    <!-- Bootstrap via CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 </head>
-<body>
-    <h1>Registro Realizado com Sucesso!</h1>
-    <p>Seu registro foi concluído. Você já pode fazer login no sistema.</p>
-    <a href="login.php">Clique aqui para fazer login</a>
+<body class="bg-light d-flex align-items-center justify-content-center vh-100">
+    <div class="container text-center">
+        <div class="card shadow-lg p-4 border-0" style="max-width: 500px; margin: auto;">
+            <h1 class="text-success fw-bold">Registro Realizado com Sucesso!</h1>
+            <p class="mt-3 text-secondary">Seu registro foi concluído. Você já pode fazer login no sistema.</p>
+            <a href="login.php" class="btn btn-primary mt-4 px-4 py-2">Clique aqui para fazer login</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
