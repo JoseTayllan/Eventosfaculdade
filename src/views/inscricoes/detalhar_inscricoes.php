@@ -35,46 +35,74 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes das Inscrições</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <!-- CSS Customizado -->
     <link rel="stylesheet" href="/Eventosfaculdade/public/css/style.css">
 </head>
 <body>
-    <h1>Inscritos no Evento</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Tipo</th>
-                <th>Compareceu</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (!empty($inscritos)): ?>
-                <?php foreach ($inscritos as $inscrito): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($inscrito['NomeParticipante']); ?></td>
-                        <td><?php echo htmlspecialchars($inscrito['EmailParticipante']); ?></td>
-                        <td><?php echo htmlspecialchars($inscrito['TipoParticipante']); ?></td>
-                        <td>
-                            <?php
-                            if ($inscrito['Compareceu'] === null) {
-                                echo "Não registrado";
-                            } elseif ($inscrito['Compareceu'] == 1) {
-                                echo "Sim";
-                            } else {
-                                echo "Não";
-                            }
-                            ?>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr>
-                    <td colspan="4">Nenhum participante inscrito.</td>
-                </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
-    <a href="/Eventosfaculdade/src/views/inscricoes/listar_inscricoes.php">Voltar</a>
+    <!-- Header -->
+    <header class="bg-secondary text-white text-center py-3">
+        <h1>Detalhes das Inscrições</h1>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <?php if (!empty($inscritos)): ?>
+                    <!-- Tabela de Inscritos -->
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Tipo</th>
+                                <th>Compareceu</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($inscritos as $inscrito): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($inscrito['NomeParticipante']); ?></td>
+                                    <td><?php echo htmlspecialchars($inscrito['EmailParticipante']); ?></td>
+                                    <td><?php echo htmlspecialchars($inscrito['TipoParticipante']); ?></td>
+                                    <td>
+                                        <?php
+                                        if ($inscrito['Compareceu'] === null) {
+                                            echo "<span class='text-muted'>Não registrado</span>";
+                                        } elseif ($inscrito['Compareceu'] == 1) {
+                                            echo "<span class='text-success'>Sim</span>";
+                                        } else {
+                                            echo "<span class='text-danger'>Não</span>";
+                                        }
+                                        ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php else: ?>
+                    <!-- Mensagem de Nenhum Participante -->
+                    <div class="alert alert-warning text-center">
+                        Nenhum participante inscrito.
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <!-- Link para Voltar -->
+        <div class="text-center mt-4">
+            <a href="/Eventosfaculdade/src/views/inscricoes/listar_inscricoes.php" class="btn btn-secondary">Voltar</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-white text-center py-3 mt-5">
+        <p class="m-0">&copy; 2024 Sistema de Eventos</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -75,74 +75,106 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Filtrar Inscrições</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <!-- CSS Customizado -->
     <link rel="stylesheet" href="/Eventosfaculdade/public/css/style.css">
 </head>
 <body>
-    <h1>Filtrar Inscrições</h1>
+    <!-- Header -->
+    <header class="bg-secondary text-white text-center py-3">
+        <h1>Filtrar Inscrições</h1>
+    </header>
 
-    <!-- Formulário de Filtros -->
-    <!-- Formulário de Filtros -->
-<form method="GET" action="">
-    <label for="departamento">Departamento:</label>
-    <select name="departamento" id="departamento">
-        <option value="">Todos</option>
-        <?php foreach ($departamentos as $departamento): ?>
-            <option value="<?php echo $departamento['DepartamentoId']; ?>" 
-                <?php echo ($filtros['departamento'] == $departamento['DepartamentoId']) ? 'selected' : ''; ?>>
-                <?php echo htmlspecialchars($departamento['NomeDepartamento']); ?>
-            </option>
-        <?php endforeach; ?>
-    </select>
+    <!-- Conteúdo Principal -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Formulário de Filtros -->
+                <form method="GET" action="" class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <label for="departamento" class="form-label">Departamento:</label>
+                        <select name="departamento" id="departamento" class="form-select">
+                            <option value="">Todos</option>
+                            <?php foreach ($departamentos as $departamento): ?>
+                                <option value="<?php echo $departamento['DepartamentoId']; ?>" 
+                                    <?php echo ($filtros['departamento'] == $departamento['DepartamentoId']) ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($departamento['NomeDepartamento']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="data_inicio" class="form-label">Data Início:</label>
+                        <input type="date" name="data_inicio" id="data_inicio" class="form-control" value="<?php echo htmlspecialchars($filtros['data_inicio'] ?? ''); ?>">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="data_fim" class="form-label">Data Fim:</label>
+                        <input type="date" name="data_fim" id="data_fim" class="form-control" value="<?php echo htmlspecialchars($filtros['data_fim'] ?? ''); ?>">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="tipo_participante" class="form-label">Tipo de Participante:</label>
+                        <select name="tipo_participante" id="tipo_participante" class="form-select">
+                            <option value="">Todos</option>
+                            <option value="Interno" <?php echo ($filtros['tipo_participante'] == 'Interno') ? 'selected' : ''; ?>>Interno</option>
+                            <option value="Externo" <?php echo ($filtros['tipo_participante'] == 'Externo') ? 'selected' : ''; ?>>Externo</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                    </div>
+                </form>
 
-    <label for="data_inicio">Data Início:</label>
-    <input type="date" name="data_inicio" id="data_inicio" value="<?php echo htmlspecialchars($filtros['data_inicio'] ?? ''); ?>">
+                <!-- Tabela de Inscrições -->
+                <?php if (!empty($inscricoes)): ?>
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Evento</th>
+                                <th>Participante</th>
+                                <th>Email</th>
+                                <th>Tipo</th>
+                                <th>Departamento</th>
+                                <th>Compareceu</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($inscricoes as $inscricao): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($inscricao['NomeEvento']); ?></td>
+                                    <td><?php echo htmlspecialchars($inscricao['NomeParticipante']); ?></td>
+                                    <td><?php echo htmlspecialchars($inscricao['EmailParticipante']); ?></td>
+                                    <td><?php echo htmlspecialchars($inscricao['TipoParticipante']); ?></td>
+                                    <td><?php echo htmlspecialchars($inscricao['NomeDepartamento']); ?></td>
+                                    <td>
+                                        <?php echo ($inscricao['Compareceu'] === null) 
+                                            ? "<span class='text-muted'>Não registrado</span>" 
+                                            : ($inscricao['Compareceu'] ? "<span class='text-success'>Sim</span>" : "<span class='text-danger'>Não</span>"); ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php else: ?>
+                    <div class="alert alert-warning text-center">
+                        Nenhuma inscrição encontrada.
+                    </div>
+                <?php endif; ?>
 
-    <label for="data_fim">Data Fim:</label>
-    <input type="date" name="data_fim" id="data_fim" value="<?php echo htmlspecialchars($filtros['data_fim'] ?? ''); ?>">
+                <!-- Botão para Voltar -->
+                <div class="text-center mt-4">
+                    <a href="/Eventosfaculdade/src/views/dashboard/admin.php" class="btn btn-secondary">Voltar ao Painel Administrativo</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <label for="tipo_participante">Tipo de Participante:</label>
-    <select name="tipo_participante" id="tipo_participante">
-        <option value="">Todos</option>
-        <option value="Interno" <?php echo ($filtros['tipo_participante'] == 'Interno') ? 'selected' : ''; ?>>Interno</option>
-        <option value="Externo" <?php echo ($filtros['tipo_participante'] == 'Externo') ? 'selected' : ''; ?>>Externo</option>
-    </select>
+    <!-- Footer -->
+    <footer class="bg-secondary text-white text-center py-3 mt-5">
+        <p class="m-0">&copy; 2024 Sistema de Eventos</p>
+    </footer>
 
-    <button type="submit">Filtrar</button>
-</form>
-
-
-    <!-- Tabela de Inscrições -->
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Evento</th>
-                <th>Participante</th>
-                <th>Email</th>
-                <th>Tipo</th>
-                <th>Departamento</th>
-                <th>Compareceu</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (!empty($inscricoes)): ?>
-                <?php foreach ($inscricoes as $inscricao): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($inscricao['NomeEvento']); ?></td>
-                        <td><?php echo htmlspecialchars($inscricao['NomeParticipante']); ?></td>
-                        <td><?php echo htmlspecialchars($inscricao['EmailParticipante']); ?></td>
-                        <td><?php echo htmlspecialchars($inscricao['TipoParticipante']); ?></td>
-                        <td><?php echo htmlspecialchars($inscricao['NomeDepartamento']); ?></td>
-                        <td><?php echo ($inscricao['Compareceu'] === null) ? "Não registrado" : ($inscricao['Compareceu'] ? "Sim" : "Não"); ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr>
-                    <td colspan="6">Nenhuma inscrição encontrada.</td>
-                </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
-
-    <a href="/Eventosfaculdade/src/views/dashboard/admin.php">Voltar ao Painel Administrativo</a>
+    <!-- Bootstrap JS -->
+    <script src="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

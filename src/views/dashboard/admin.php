@@ -22,31 +22,73 @@ $_SESSION['LAST_ACTIVITY'] = time();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel do Administrador</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <!-- CSS Customizado -->
     <link rel="stylesheet" href="/Eventosfaculdade/public/css/style.css">
 </head>
 <body>
-    <h1>Bem-vindo, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!</h1>
+    <!-- Header -->
+    <header class="bg-secondary text-white text-center py-3">
+        <h1>Painel do Administrador</h1>
+    </header>
 
-    <!-- Exibição de mensagens de feedback -->
-    <?php if (isset($_GET['success']) && $_GET['success'] === 'evento_excluido'): ?>
-        <p style="color: green;">Evento excluído com sucesso!</p>
-    <?php endif; ?>
+    <!-- Conteúdo Principal -->
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Bem-vindo, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!</h2>
 
-    <?php if (isset($_GET['error']) && $_GET['error'] === 'evento_com_inscricoes'): ?>
-        <p style="color: red;">Erro: Este evento possui inscrições vinculadas e não pode ser excluído.</p>
-    <?php endif; ?>
+        <!-- Exibição de mensagens de feedback -->
+        <?php if (isset($_GET['success']) && $_GET['success'] === 'evento_excluido'): ?>
+            <div class="alert alert-success text-center">
+                Evento excluído com sucesso!
+            </div>
+        <?php endif; ?>
 
-    <nav>
-        <ul>
-            <li><a href="/Eventosfaculdade/src/views/eventos/cadastrar.php">Cadastrar Evento</a></li>
-            <li><a href="/Eventosfaculdade/src/views/eventos/listar.php">Gerenciar Eventos</a></li>
-            <li><a href="/Eventosfaculdade/src/views/departamentos/cadastrar.php">Cadastrar Departamento</a></li>
-            <li><a href="/Eventosfaculdade/src/views/presenca/listar_eventos.php">Validar Presenças</a></li>
-            <li><a href="/Eventosfaculdade/src/views/inscricoes/listar_inscricoes.php">Acompanhar Inscrições</a></li>
-            <li><a href="/Eventosfaculdade/src/views/presenca/resumo_presencas.php">Resumo de Presenças</a></li>
-            <li><a href="/Eventosfaculdade/src/views/inscricoes/filtrar_inscricoes.php">Filtrar Inscrições</a></li>
-        </ul>
-    </nav>
-    <a href="/Eventosfaculdade/src/controllers/LogoutController.php">Sair</a>
+        <?php if (isset($_GET['error']) && $_GET['error'] === 'evento_com_inscricoes'): ?>
+            <div class="alert alert-danger text-center">
+                Erro: Este evento possui inscrições vinculadas e não pode ser excluído.
+            </div>
+        <?php endif; ?>
+
+        <!-- Navegação -->
+        <nav class="mb-4">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a href="/Eventosfaculdade/src/views/eventos/cadastrar.php" class="text-decoration-none">Cadastrar Evento</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="/Eventosfaculdade/src/views/eventos/listar.php" class="text-decoration-none">Gerenciar Eventos</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="/Eventosfaculdade/src/views/departamentos/cadastrar.php" class="text-decoration-none">Cadastrar Departamento</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="/Eventosfaculdade/src/views/presenca/listar_eventos.php" class="text-decoration-none">Validar Presenças</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="/Eventosfaculdade/src/views/inscricoes/listar_inscricoes.php" class="text-decoration-none">Acompanhar Inscrições</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="/Eventosfaculdade/src/views/presenca/resumo_presencas.php" class="text-decoration-none">Resumo de Presenças</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="/Eventosfaculdade/src/views/inscricoes/filtrar_inscricoes.php" class="text-decoration-none">Filtrar Inscrições</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Botão de Logout -->
+        <div class="text-center">
+            <a href="/Eventosfaculdade/src/controllers/LogoutController.php" class="btn btn-danger">Sair</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-white text-center py-3 mt-5">
+        <p class="m-0">&copy; 2024 Sistema de Eventos</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

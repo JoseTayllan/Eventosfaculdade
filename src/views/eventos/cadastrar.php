@@ -22,62 +22,127 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Evento</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <!-- CSS Customizado -->
     <link rel="stylesheet" href="/Eventosfaculdade/public/css/style.css">
 </head>
 <body>
-    <h1>Cadastro de Evento</h1>
-    <form method="POST" action="/Eventosfaculdade/src/controllers/CadastrarEventoController.php" enctype="multipart/form-data">
-        <label for="nomeEvento">Nome do Evento:</label>
-        <input type="text" id="nomeEvento" name="nome" required>
+    <!-- Header -->
+    <header class="bg-secondary text-white text-center py-3">
+        <h1>Cadastro de Evento</h1>
+    </header>
 
-        <label for="dataInicio">Data de Início:</label>
-        <input type="date" id="dataInicio" name="data_inicio" required>
+    <!-- Conteúdo Principal -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <!-- Card do Formulário -->
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h2 class="text-center mb-4">Preencha os Detalhes do Evento</h2>
 
-        <label for="dataFim">Data de Término:</label>
-        <input type="date" id="dataFim" name="data_fim" required>
+                        <!-- Formulário -->
+                        <form method="POST" action="/Eventosfaculdade/src/controllers/CadastrarEventoController.php" enctype="multipart/form-data">
+                            <!-- Nome do Evento -->
+                            <div class="mb-3">
+                                <label for="nomeEvento" class="form-label">Nome do Evento</label>
+                                <input type="text" id="nomeEvento" name="nome" class="form-control" required>
+                            </div>
 
-        <label for="horarioInicio">Horário de Início:</label>
-        <input type="time" id="horarioInicio" name="horario_inicio" required>
+                            <!-- Data e Horários -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="dataInicio" class="form-label">Data de Início</label>
+                                    <input type="date" id="dataInicio" name="data_inicio" class="form-control" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="dataFim" class="form-label">Data de Término</label>
+                                    <input type="date" id="dataFim" name="data_fim" class="form-control" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="horarioInicio" class="form-label">Horário de Início</label>
+                                    <input type="time" id="horarioInicio" name="horario_inicio" class="form-control" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="horarioTermino" class="form-label">Horário de Término</label>
+                                    <input type="time" id="horarioTermino" name="horario_termino" class="form-control" required>
+                                </div>
+                            </div>
 
-        <label for="horarioTermino">Horário de Término:</label>
-        <input type="time" id="horarioTermino" name="horario_termino" required>
+                            <!-- Local -->
+                            <div class="mb-3">
+                                <label for="local" class="form-label">Local</label>
+                                <input type="text" id="local" name="local" class="form-control" required>
+                            </div>
 
-        <label for="local">Local:</label>
-        <input type="text" id="local" name="local" required>
+                            <!-- Departamento -->
+                            <div class="mb-3">
+                                <label for="departamento" class="form-label">Departamento</label>
+                                <select id="departamento" name="departamento" class="form-select" required>
+                                    <option value="">Selecione o Departamento</option>
+                                    <?php foreach ($departamentos as $departamento): ?>
+                                        <option value="<?php echo $departamento['DepartamentoId']; ?>">
+                                            <?php echo htmlspecialchars($departamento['NomeDepartamento']); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
 
-        <label for="departamento">Departamento:</label>
-        <select id="departamento" name="departamento" required>
-            <option value="">Selecione o Departamento</option>
-            <?php foreach ($departamentos as $departamento): ?>
-                <option value="<?php echo $departamento['DepartamentoId']; ?>">
-                    <?php echo htmlspecialchars($departamento['NomeDepartamento']); ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
+                            <!-- Palestrante -->
+                            <div class="mb-3">
+                                <label for="palestrante" class="form-label">Palestrante</label>
+                                <select id="palestrante" name="palestrante" class="form-select" required>
+                                    <option value="">Selecione o Palestrante</option>
+                                    <?php foreach ($palestrantes as $palestrante): ?>
+                                        <option value="<?php echo $palestrante['ParticipanteId']; ?>">
+                                            <?php echo htmlspecialchars($palestrante['NomeParticipante']); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
 
-        <label for="palestrante">Palestrante:</label>
-        <select id="palestrante" name="palestrante" required>
-            <option value="">Selecione o Palestrante</option>
-            <?php foreach ($palestrantes as $palestrante): ?>
-                <option value="<?php echo $palestrante['ParticipanteId']; ?>">
-                    <?php echo htmlspecialchars($palestrante['NomeParticipante']); ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
+                            <!-- Carga Horária -->
+                            <div class="mb-3">
+                                <label for="cargaHoraria" class="form-label">Carga Horária</label>
+                                <input type="number" id="cargaHoraria" name="carga_horaria" class="form-control" required>
+                            </div>
 
-        <label for="cargaHoraria">Carga Horária:</label>
-        <input type="number" id="cargaHoraria" name="carga_horaria" required>
+                            <!-- Descrição -->
+                            <div class="mb-3">
+                                <label for="descricao" class="form-label">Descrição</label>
+                                <textarea id="descricao" name="descricao" class="form-control" rows="3" required></textarea>
+                            </div>
 
-        <label for="descricao">Descrição:</label>
-        <textarea id="descricao" name="descricao" required></textarea>
+                            <!-- Imagem Representativa -->
+                            <div class="mb-3">
+                                <label for="imagem" class="form-label">Imagem Representativa</label>
+                                <input type="file" id="imagem" name="imagem" class="form-control" accept="image/*">
+                            </div>
 
-        <label for="imagem">Imagem Representativa:</label>
-        <input type="file" id="imagem" name="imagem" accept="image/*">
+                            <!-- Vagas -->
+                            <div class="mb-3">
+                                <label for="vagas" class="form-label">Número de Vagas Disponíveis</label>
+                                <input type="number" id="vagas" name="vagas" class="form-control" min="1" required>
+                            </div>
 
-        <label for="vagas">Número de Vagas Disponíveis:</label>
-        <input type="number" id="vagas" name="vagas" min="1" required>
+                            <!-- Botão de Cadastro -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Cadastrar Evento</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <button type="submit">Cadastrar Evento</button>
-    </form>
+    <!-- Footer -->
+    <footer class="bg-secondary text-white text-center py-3 mt-5">
+        <p class="m-0">&copy; 2024 Sistema de Eventos</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

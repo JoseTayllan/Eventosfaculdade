@@ -27,38 +27,66 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscrições por Evento</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <!-- CSS Customizado -->
     <link rel="stylesheet" href="/Eventosfaculdade/public/css/style.css">
 </head>
 <body>
-    <h1>Inscrições por Evento</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Nome do Evento</th>
-                <th>Data</th>
-                <th>Total de Inscritos</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (!empty($eventos)): ?>
-                <?php foreach ($eventos as $evento): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($evento['NomeEvento']); ?></td>
-                        <td><?php echo date('d/m/Y', strtotime($evento['DataInicioEvento'])); ?> - <?php echo date('d/m/Y', strtotime($evento['DataFimEvento'])); ?></td>
-                        <td><?php echo $evento['TotalInscritos']; ?></td>
-                        <td>
-                            <a href="/Eventosfaculdade/src/views/inscricoes/detalhar_inscricoes.php?evento_id=<?php echo $evento['EventoId']; ?>">Detalhar</a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr>
-                    <td colspan="4">Nenhum evento encontrado.</td>
-                </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
-    <a href="/Eventosfaculdade/src/views/dashboard/admin.php">Voltar ao Painel Administrativo</a>
+    <!-- Header -->
+    <header class="bg-secondary text-white text-center py-3">
+        <h1>Inscrições por Evento</h1>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <?php if (!empty($eventos)): ?>
+                    <!-- Tabela de Eventos -->
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Nome do Evento</th>
+                                <th>Data</th>
+                                <th>Total de Inscritos</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($eventos as $evento): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($evento['NomeEvento']); ?></td>
+                                    <td><?php echo date('d/m/Y', strtotime($evento['DataInicioEvento'])); ?> - <?php echo date('d/m/Y', strtotime($evento['DataFimEvento'])); ?></td>
+                                    <td><?php echo $evento['TotalInscritos']; ?></td>
+                                    <td>
+                                        <a href="/Eventosfaculdade/src/views/inscricoes/detalhar_inscricoes.php?evento_id=<?php echo $evento['EventoId']; ?>" class="btn btn-info btn-sm">Detalhar</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php else: ?>
+                    <!-- Mensagem de Nenhum Evento -->
+                    <div class="alert alert-warning text-center">
+                        Nenhum evento encontrado.
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <!-- Link para o Painel Administrativo -->
+        <div class="text-center mt-4">
+            <a href="/Eventosfaculdade/src/views/dashboard/admin.php" class="btn btn-secondary">Voltar ao Painel Administrativo</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-white text-center py-3 mt-5">
+        <p class="m-0">&copy; 2024 Sistema de Eventos</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

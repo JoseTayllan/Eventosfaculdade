@@ -4,28 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Usuário</title>
-    <link rel="stylesheet" href="../../public/css/style.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <!-- CSS Customizado -->
+    <link rel="stylesheet" href="/Eventosfaculdade/public/css/style.css">
 </head>
 <body>
-    <h1>Registro de Usuário</h1>
-    <form method="POST" action="/Eventosfaculdade/src/controllers/RegisterController.php">
-        <input type="text" name="nome" placeholder="Nome Completo" required>
-        <input type="email" name="email" placeholder="E-mail" required>
-        <select name="tipo" id="tipo" required>
-            <option value="">Selecione o tipo</option>
-            <option value="Interno">Interno</option>
-            <option value="Externo">Externo</option>
-        </select>
-        <div id="campos-interno" style="display: none;">
-            <input type="text" name="numero_matricula" placeholder="Número de Matrícula">
-        </div>
-        <div id="campos-externo" style="display: none;">
-            <input type="text" name="cpf" placeholder="CPF">
-        </div>
-        <input type="password" name="senha" placeholder="Senha" required>
-        <button type="submit">Registrar</button>
-    </form>
+    <!-- Header -->
+    <header class="bg-secondary text-white text-center py-3">
+        <h1>Registro de Usuário</h1>
+    </header>
 
+    <!-- Conteúdo Principal -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="p-4 border rounded bg-light shadow">
+                    <h2 class="text-center mb-4">Preencha o Formulário</h2>
+
+                    <!-- Formulário -->
+                    <form method="POST" action="/Eventosfaculdade/src/controllers/RegisterController.php">
+                        <!-- Nome -->
+                        <div class="mb-3">
+                            <label for="nome" class="form-label">Nome Completo</label>
+                            <input type="text" name="nome" id="nome" class="form-control" placeholder="Digite seu nome completo" required>
+                        </div>
+
+                        <!-- E-mail -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">E-mail</label>
+                            <input type="email" name="email" id="email" class="form-control" placeholder="Digite seu e-mail" required>
+                        </div>
+
+                        <!-- Tipo de Usuário -->
+                        <div class="mb-3">
+                            <label for="tipo" class="form-label">Tipo de Usuário</label>
+                            <select name="tipo" id="tipo" class="form-select" required>
+                                <option value="">Selecione o tipo</option>
+                                <option value="Interno">Interno</option>
+                                <option value="Externo">Externo</option>
+                            </select>
+                        </div>
+
+                        <!-- Campos Dinâmicos -->
+                        <div id="campos-interno" class="mb-3" style="display: none;">
+                            <label for="numero_matricula" class="form-label">Número de Matrícula</label>
+                            <input type="text" name="numero_matricula" id="numero_matricula" class="form-control" placeholder="Digite seu número de matrícula">
+                        </div>
+                        <div id="campos-externo" class="mb-3" style="display: none;">
+                            <label for="cpf" class="form-label">CPF</label>
+                            <input type="text" name="cpf" id="cpf" class="form-control" placeholder="Digite seu CPF">
+                        </div>
+
+                        <!-- Senha -->
+                        <div class="mb-3">
+                            <label for="senha" class="form-label">Senha</label>
+                            <input type="password" name="senha" id="senha" class="form-control" placeholder="Digite sua senha" required>
+                        </div>
+
+                        <!-- Botão de Registro -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Registrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-secondary text-white text-center py-3 mt-5">
+        <p class="m-0">&copy; 2024 Sistema de Eventos</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Script Dinâmico -->
     <script>
         const tipoSelect = document.getElementById('tipo');
         const camposInterno = document.getElementById('campos-interno');
