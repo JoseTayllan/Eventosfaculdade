@@ -17,7 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento_id'])) {
     $horarioTermino = $_POST['horario_termino'];
     $local = $_POST['local'];
     $departamento = $_POST['departamento'];
-    $palestrante = $_POST['palestrante'];
+    $palestranteId = $_POST['palestrante']; // ID do palestrante existente
+    $palestranteManual = $_POST['palestrante_manual']; // Nome do palestrante inserido manualmente
     $cargaHoraria = $_POST['carga_horaria'];
     $descricao = $_POST['descricao'];
     $vagasDisponiveis = $_POST['vagas_disponiveis'];
@@ -39,6 +40,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento_id'])) {
             }
         }
 
+        // Define o palestrante final
+        if (!empty($palestranteManual)) {
+            $palestranteFinal = $palestranteManual;
+        } elseif (!empty($palestranteId)) {
+            $stmt = $pdo->prepare("SELECT NomeParticipante FROM Participantes WHERE ParticipanteId = :id");
+            $stmt->execute([':id' => $palestranteId]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $palestranteFinal = $result['NomeParticipante'] ?? 'Palestrante Não Informado';
+        } else {
+            $palestranteFinal = 'Palestrante Não Informado';
+        }
+
         // Atualiza os dados do evento
         $sql = "UPDATE Eventos 
                 SET NomeEvento = :nome, 
@@ -48,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento_id'])) {
                     HorarioTermino = :horarioTermino, 
                     LocalEvento = :local, 
                     DepartamentoEventoId = :departamento, 
-                    PalestranteId = :palestrante, 
+                    Palestrante = :palestrante, 
                     CargaHoraria = :cargaHoraria, 
                     DescricaoEvento = :descricao, 
                     VagasDisponiveis = :vagasDisponiveis";
@@ -68,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento_id'])) {
             ':horarioTermino' => $horarioTermino,
             ':local' => $local,
             ':departamento' => $departamento,
-            ':palestrante' => $palestrante,
+            ':palestrante' => $palestranteFinal,
             ':cargaHoraria' => $cargaHoraria,
             ':descricao' => $descricao,
             ':vagasDisponiveis' => $vagasDisponiveis,

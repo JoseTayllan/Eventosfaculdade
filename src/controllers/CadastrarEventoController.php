@@ -2,13 +2,13 @@
 require_once '../../config/database.php';
 session_start();
 
+// Verifica se o administrador está logado
 if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'Admin') {
     header("Location: /Eventosfaculdade/src/views/admin/login.php");
     exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Dados do formulário
     $nome = $_POST['nome'];
     $dataInicio = $_POST['data_inicio'];
     $dataFim = $_POST['data_fim'];
@@ -16,10 +16,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $horarioTermino = $_POST['horario_termino'];
     $local = $_POST['local'];
     $departamento = $_POST['departamento'];
-    $palestrante = $_POST['palestrante'];
+    $palestranteId = $_POST['palestrante']; // ID do palestrante existente
+    $palestranteManual = $_POST['palestrante_manual']; // Nome do palestrante inserido manualmente
     $cargaHoraria = $_POST['carga_horaria'];
     $descricao = $_POST['descricao'];
-    $vagas = $_POST['vagas']; // Adicionado
+    $vagasDisponiveis = $_POST['vagas_disponiveis'] ?? null;
+
+    // Validação das vagas
+    if ($vagasDisponiveis === null || !is_numeric($vagasDisponiveis)) {
+        die("Erro: O campo 'Vagas Disponíveis' é obrigatório e deve conter um valor numérico.");
+    }
 
     // Upload da imagem
     $imagem = null;
@@ -35,14 +41,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Inserção no banco de dados
     try {
+        // Define o palestrante
+        if (empty($palestranteId) && !empty($palestranteManual)) {
+            $palestranteFinal = $palestranteManual;
+        } elseif (!empty($palestranteId)) {
+            $stmt = $pdo->prepare("SELECT NomeParticipante FROM Participantes WHERE ParticipanteId = :id");
+            $stmt->execute([':id' => $palestranteId]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $palestranteFinal = $result['NomeParticipante'] ?? 'Palestrante Não Informado';
+        } else {
+            $palestranteFinal = 'Palestrante Não Informado';
+        }
+
+        // Inserção no banco de dados
         $sql = "INSERT INTO Eventos 
-                (NomeEvento, DataInicioEvento, DataFimEvento, HorarioInicio, HorarioTermino, LocalEvento, DepartamentoEventoId, 
-                 PalestranteId, CargaHoraria, DescricaoEvento, ImagemEvento, VagasDisponiveis) 
+                (NomeEvento, DataInicioEvento, DataFimEvento, HorarioInicio, HorarioTermino, LocalEvento, 
+                 DepartamentoEventoId, Palestrante, CargaHoraria, DescricaoEvento, ImagemEvento, VagasDisponiveis) 
                 VALUES 
-                (:nome, :dataInicio, :dataFim, :horarioInicio, :horarioTermino, :local, :departamento, :palestrante, 
-                 :cargaHoraria, :descricao, :imagem, :vagas)";
+                (:nome, :dataInicio, :dataFim, :horarioInicio, :horarioTermino, :local, 
+                 :departamento, :palestrante, :cargaHoraria, :descricao, :imagem, :vagasDisponiveis)";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
             ':nome' => $nome,
@@ -52,11 +70,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':horarioTermino' => $horarioTermino,
             ':local' => $local,
             ':departamento' => $departamento,
-            ':palestrante' => $palestrante,
+            ':palestrante' => $palestranteFinal,
             ':cargaHoraria' => $cargaHoraria,
             ':descricao' => $descricao,
             ':imagem' => $imagem,
-            ':vagas' => $vagas,
+            ':vagasDisponiveis' => $vagasDisponiveis,
         ]);
 
         header("Location: /Eventosfaculdade/src/views/dashboard/admin.php?success=evento_cadastrado");
@@ -65,4 +83,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Erro ao cadastrar evento: " . $e->getMessage());
     }
 }
-?>

@@ -12,10 +12,10 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'Admin') {
 try {
     $sql = "SELECT e.EventoId, e.NomeEvento, e.DataInicioEvento, e.DataFimEvento, e.HorarioInicio, e.HorarioTermino,
                    e.LocalEvento, e.CargaHoraria, e.DescricaoEvento, e.ImagemEvento, e.VagasDisponiveis, d.NomeDepartamento, 
-                   p.NomeParticipante AS Palestrante
+                   COALESCE(e.Palestrante, p.NomeParticipante) AS Palestrante
             FROM Eventos e
-            JOIN Departamentos d ON e.DepartamentoEventoId = d.DepartamentoId
-            JOIN Participantes p ON e.PalestranteId = p.ParticipanteId";
+            LEFT JOIN Departamentos d ON e.DepartamentoEventoId = d.DepartamentoId
+            LEFT JOIN Participantes p ON e.PalestranteId = p.ParticipanteId";
     $stmt = $pdo->query($sql);
     $eventos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -26,6 +26,7 @@ function formatarData($data) {
     return date('d/m/Y', strtotime($data));
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -68,20 +69,20 @@ function formatarData($data) {
                         <tr>
                             <td>
                                 <?php if (!empty($evento['ImagemEvento'])): ?>
-                                    <img src="<?php echo htmlspecialchars($evento['ImagemEvento']); ?>" alt="Imagem do Evento" class="img-thumbnail" style="width: 100px; height: auto;">
+                                    <img src="<?php echo htmlspecialchars($evento['ImagemEvento'] ?? ''); ?>" alt="Imagem do Evento" class="img-thumbnail" style="width: 100px; height: auto;">
                                 <?php else: ?>
                                     <span class="text-muted">Sem imagem</span>
                                 <?php endif; ?>
                             </td>
-                            <td><?php echo htmlspecialchars($evento['NomeEvento']); ?></td>
-                            <td><?php echo formatarData($evento['DataInicioEvento']); ?> a <?php echo formatarData($evento['DataFimEvento']); ?></td>
-                            <td><?php echo htmlspecialchars($evento['HorarioInicio']); ?> - <?php echo htmlspecialchars($evento['HorarioTermino']); ?></td>
-                            <td><?php echo htmlspecialchars($evento['LocalEvento']); ?></td>
-                            <td><?php echo htmlspecialchars($evento['NomeDepartamento']); ?></td>
-                            <td><?php echo htmlspecialchars($evento['Palestrante']); ?></td>
-                            <td><?php echo htmlspecialchars($evento['CargaHoraria']); ?> horas</td>
-                            <td><?php echo htmlspecialchars($evento['DescricaoEvento']); ?></td>
-                            <td><?php echo htmlspecialchars($evento['VagasDisponiveis']); ?></td>
+                            <td><?php echo htmlspecialchars($evento['NomeEvento'] ?? ''); ?></td>
+                            <td><?php echo formatarData($evento['DataInicioEvento']) . ' a ' . formatarData($evento['DataFimEvento']); ?></td>
+                            <td><?php echo htmlspecialchars($evento['HorarioInicio'] ?? '') . ' - ' . htmlspecialchars($evento['HorarioTermino'] ?? ''); ?></td>
+                            <td><?php echo htmlspecialchars($evento['LocalEvento'] ?? ''); ?></td>
+                            <td><?php echo htmlspecialchars($evento['NomeDepartamento'] ?? ''); ?></td>
+                            <td><?php echo htmlspecialchars($evento['Palestrante'] ?? 'Não informado'); ?></td>
+                            <td><?php echo htmlspecialchars($evento['CargaHoraria'] ?? '') . ' horas'; ?></td>
+                            <td><?php echo htmlspecialchars($evento['DescricaoEvento'] ?? ''); ?></td>
+                            <td><?php echo htmlspecialchars($evento['VagasDisponiveis'] ?? ''); ?></td>
                             <td>
                                 <a href="/Eventosfaculdade/src/views/eventos/editar.php?evento_id=<?php echo $evento['EventoId']; ?>" class="btn btn-warning btn-sm mb-1">Editar</a>
                                 <form method="POST" action="/Eventosfaculdade/src/controllers/ExcluirEventoController.php" style="display:inline;">

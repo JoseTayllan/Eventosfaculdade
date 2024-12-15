@@ -92,14 +92,18 @@ try {
                             <!-- Palestrante -->
                             <div class="mb-3">
                                 <label for="palestrante" class="form-label">Palestrante</label>
-                                <select id="palestrante" name="palestrante" class="form-select" required>
-                                    <option value="">Selecione o Palestrante</option>
+                                <select id="palestrante" name="palestrante" class="form-select">
+                                    <option value="">Selecione um Palestrante Existente (Opcional)</option>
                                     <?php foreach ($palestrantes as $palestrante): ?>
                                         <option value="<?php echo $palestrante['ParticipanteId']; ?>">
                                             <?php echo htmlspecialchars($palestrante['NomeParticipante']); ?>
                                         </option>
                                     <?php endforeach; ?>
                                 </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="palestranteManual" class="form-label">Ou Insira o Nome do Palestrante Manualmente</label>
+                                <input type="text" id="palestranteManual" name="palestrante_manual" class="form-control">
                             </div>
 
                             <!-- Carga Horária -->
@@ -123,7 +127,7 @@ try {
                             <!-- Vagas -->
                             <div class="mb-3">
                                 <label for="vagas" class="form-label">Número de Vagas Disponíveis</label>
-                                <input type="number" id="vagas" name="vagas" class="form-control" min="1" required>
+                                <input type="number" id="vagas" name="vagas_disponiveis" class="form-control" min="1" required>
                             </div>
 
                             <!-- Botão de Cadastro -->

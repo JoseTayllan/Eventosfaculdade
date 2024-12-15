@@ -18,10 +18,10 @@ if (!$eventoId) {
 try {
     $sql = "SELECT e.EventoId, e.NomeEvento, e.DataInicioEvento, e.DataFimEvento, e.HorarioInicio, e.HorarioTermino, 
                    e.LocalEvento, e.CargaHoraria, e.DescricaoEvento, e.ImagemEvento, e.VagasDisponiveis, 
-                   d.DepartamentoId, d.NomeDepartamento, p.ParticipanteId, p.NomeParticipante 
+                   e.Palestrante AS PalestranteManual, d.DepartamentoId, d.NomeDepartamento, p.ParticipanteId, p.NomeParticipante 
             FROM Eventos e
-            JOIN Departamentos d ON e.DepartamentoEventoId = d.DepartamentoId
-            JOIN Participantes p ON e.PalestranteId = p.ParticipanteId
+            LEFT JOIN Departamentos d ON e.DepartamentoEventoId = d.DepartamentoId
+            LEFT JOIN Participantes p ON e.Palestrante = p.ParticipanteId
             WHERE e.EventoId = :evento_id";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([':evento_id' => $eventoId]);
@@ -107,8 +107,8 @@ try {
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label for="palestrante" class="form-label">Palestrante:</label>
-                    <select id="palestrante" name="palestrante" class="form-select" required>
+                    <label for="palestrante" class="form-label">Palestrante (Selecionar):</label>
+                    <select id="palestrante" name="palestrante" class="form-select">
                         <option value="">Selecione o Palestrante</option>
                         <?php foreach ($palestrantes as $palestrante): ?>
                             <option value="<?php echo $palestrante['ParticipanteId']; ?>" <?php echo $evento['ParticipanteId'] == $palestrante['ParticipanteId'] ? 'selected' : ''; ?>>
@@ -117,6 +117,11 @@ try {
                         <?php endforeach; ?>
                     </select>
                 </div>
+                <div class="col-md-6">
+                    <label for="palestrante_manual" class="form-label">Palestrante (Inserir Manualmente):</label>
+                    <input type="text" id="palestrante_manual" name="palestrante_manual" class="form-control" placeholder="Digite o nome do palestrante" value="<?php echo htmlspecialchars($evento['PalestranteManual'] ?? ''); ?>">
+                </div>
+
                 <div class="col-md-12">
                     <label for="imagem" class="form-label">Imagem Atual:</label>
                     <?php if (!empty($evento['ImagemEvento'])): ?>

@@ -3,10 +3,9 @@ require_once realpath(dirname(__DIR__) . '/config/database.php');
 
 // Buscar eventos com palestrante e imagens
 $sql = "SELECT e.EventoId, e.NomeEvento, e.DataInicioEvento, e.DataFimEvento, e.HorarioInicio, e.HorarioTermino, 
-               e.LocalEvento, e.TipoEvento, e.ImagemEvento, d.NomeDepartamento, p.NomeParticipante AS Palestrante
+               e.LocalEvento, e.TipoEvento, e.ImagemEvento, e.Palestrante, d.NomeDepartamento
         FROM Eventos e
-        JOIN Departamentos d ON e.DepartamentoEventoId = d.DepartamentoId
-        JOIN Participantes p ON e.PalestranteId = p.ParticipanteId";
+        JOIN Departamentos d ON e.DepartamentoEventoId = d.DepartamentoId";
 $stmt = $pdo->query($sql);
 $eventos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -68,6 +67,7 @@ function formatarData($data) {
                                 <p class="card-text"><strong>Data:</strong> <?php echo formatarData($evento['DataInicioEvento']); ?> a <?php echo formatarData($evento['DataFimEvento']); ?></p>
                                 <p class="card-text"><strong>Horário:</strong> <?php echo htmlspecialchars($evento['HorarioInicio']); ?> - <?php echo htmlspecialchars($evento['HorarioTermino']); ?></p>
                                 <p class="card-text"><strong>Local:</strong> <?php echo htmlspecialchars($evento['LocalEvento']); ?></p>
+                                <p class="card-text"><strong>Palestrante:</strong> <?php echo htmlspecialchars($evento['Palestrante'] ?? 'Não informado'); ?></p>
                                 <a href="/Eventosfaculdade/src/views/usuarios/login.php?redirect=inscricao&evento_id=<?php echo $evento['EventoId']; ?>" class="btn btn-primary mt-auto">Inscrever-se</a>
                             </div>
                         </div>
@@ -91,5 +91,4 @@ function formatarData($data) {
     <!-- Bootstrap JS -->
     <script src="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
