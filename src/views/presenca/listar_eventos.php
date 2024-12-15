@@ -11,28 +11,33 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'Admin') {
 $adminId = $_SESSION['user_id'];
 $departamentoId = $_GET['departamento_id'] ?? null;
 
-// Buscar departamentos para o filtro
-$sqlDepartamentos = "SELECT DepartamentoId, NomeDepartamento FROM Departamentos";
-$stmtDepartamentos = $pdo->query($sqlDepartamentos);
-$departamentos = $stmtDepartamentos->fetchAll(PDO::FETCH_ASSOC);
+try {
+    // Buscar departamentos para o filtro
+    $sqlDepartamentos = "SELECT DepartamentoId, NomeDepartamento FROM Departamentos";
+    $stmtDepartamentos = $pdo->query($sqlDepartamentos);
+    $departamentos = $stmtDepartamentos->fetchAll(PDO::FETCH_ASSOC);
 
-// Buscar eventos ministrados pelo administrador
-$sqlEventos = "SELECT e.EventoId, e.NomeEvento, d.NomeDepartamento
-               FROM Eventos e
-               JOIN Departamentos d ON e.DepartamentoEventoId = d.DepartamentoId
-               WHERE e.PalestranteId = :admin_id";
+    // Buscar eventos (removido o filtro por palestrante)
+    $sqlEventos = "SELECT e.EventoId, e.NomeEvento, d.NomeDepartamento
+                   FROM Eventos e
+                   JOIN Departamentos d ON e.DepartamentoEventoId = d.DepartamentoId";
 
-if ($departamentoId) {
-    $sqlEventos .= " AND e.DepartamentoEventoId = :departamento_id";
+    if ($departamentoId) {
+        $sqlEventos .= " WHERE e.DepartamentoEventoId = :departamento_id";
+    }
+
+    $stmtEventos = $pdo->prepare($sqlEventos);
+    $params = [];
+
+    if ($departamentoId) {
+        $params[':departamento_id'] = $departamentoId;
+    }
+
+    $stmtEventos->execute($params);
+    $eventos = $stmtEventos->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Erro ao buscar dados: " . $e->getMessage());
 }
-
-$stmtEventos = $pdo->prepare($sqlEventos);
-$params = [':admin_id' => $adminId];
-if ($departamentoId) {
-    $params[':departamento_id'] = $departamentoId;
-}
-$stmtEventos->execute($params);
-$eventos = $stmtEventos->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -99,8 +104,8 @@ $eventos = $stmtEventos->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Footer -->
     <footer class="bg-secondary text-white text-center py-3 mt-5 fixed-bottom">
-    <p class="m-0">&copy; 2024 Sistema de Eventos</p>
-</footer>
+        <p class="m-0">&copy; 2024 Sistema de Eventos</p>
+    </footer>
 
     <!-- Bootstrap JS -->
     <script src="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
