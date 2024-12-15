@@ -74,6 +74,9 @@ $_SESSION['LAST_ACTIVITY'] = time();
                 <li class="list-group-item">
                     <a href="/Eventosfaculdade/src/views/inscricoes/filtrar_inscricoes.php" class="text-decoration-none">Filtrar Inscrições</a>
                 </li>
+                <li class="list-group-item">
+                    <a href="/Eventosfaculdade/src/views/banners/gerenciar_banners.php" class="text-decoration-none">Gerenciar Banners</a> <!-- Novo Link -->
+                </li>
             </ul>
         </nav>
 

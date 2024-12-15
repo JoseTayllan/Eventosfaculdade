@@ -2,12 +2,17 @@
 require_once realpath(dirname(__DIR__) . '/config/database.php');
 
 // Buscar eventos com palestrante e imagens
-$sql = "SELECT e.EventoId, e.NomeEvento, e.DataInicioEvento, e.DataFimEvento, e.HorarioInicio, e.HorarioTermino, 
+$sqlEventos = "SELECT e.EventoId, e.NomeEvento, e.DataInicioEvento, e.DataFimEvento, e.HorarioInicio, e.HorarioTermino, 
                e.LocalEvento, e.TipoEvento, e.ImagemEvento, e.Palestrante, d.NomeDepartamento
         FROM Eventos e
         JOIN Departamentos d ON e.DepartamentoEventoId = d.DepartamentoId";
-$stmt = $pdo->query($sql);
-$eventos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$stmtEventos = $pdo->query($sqlEventos);
+$eventos = $stmtEventos->fetchAll(PDO::FETCH_ASSOC);
+
+// Buscar banners
+$sqlBanners = "SELECT ImagemBanner, Titulo FROM Banners ORDER BY DataCriacao DESC";
+$stmtBanners = $pdo->query($sqlBanners);
+$banners = $stmtBanners->fetchAll(PDO::FETCH_ASSOC);
 
 function formatarData($data) {
     return date('d/m/Y', strtotime($data));
@@ -45,6 +50,32 @@ function formatarData($data) {
             </div>
         </nav>
     </header>
+
+    <!-- Carrossel de Banners -->
+    <?php if (!empty($banners)): ?>
+        <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <?php foreach ($banners as $index => $banner): ?>
+                    <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
+                        <img src="<?php echo htmlspecialchars($banner['ImagemBanner']); ?>" class="d-block w-100" alt="<?php echo htmlspecialchars($banner['Titulo'] ?? 'Banner'); ?>" style="height: 400px; object-fit: cover;">
+                        <?php if (!empty($banner['Titulo'])): ?>
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5><?php echo htmlspecialchars($banner['Titulo']); ?></h5>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Próximo</span>
+            </button>
+        </div>
+    <?php endif; ?>
 
     <!-- Conteúdo Principal -->
     <main class="container-lg mt-5">
