@@ -33,30 +33,43 @@ function formatarData($data) {
     <link rel="stylesheet" href="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/css/bootstrap.min.css">
 </head>
 <body class="bg-light">
-    
+    <!-- Header -->
     <header class="d-flex align-items-center justify-content-between py-3 px-4 bg-secondary text-white">
-    <div>
-        <img src="/Eventosfaculdade/public/uploads/Logo_FPM.png" alt="Logo" style="height: 70px;">
-    </div>
-    <h1 class="m-0">Bem-vindo, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!</h1>
-    <nav>
-        <ul class="list-unstyled d-flex m-0">
-            <li class="me-3">
-                <a href="/Eventosfaculdade/src/views/dashboard/eventos_disponiveis.php" class="btn btn-outline-light btn-sm me-2">Ver Eventos Disponíveis</a>
-            </li>
-            <li>
-                <a href="/Eventosfaculdade/src/views/dashboard/perfil.php" class="btn btn-outline-light btn-sm me-2">Perfil</a>
-            </li>
-            <li>
-                <a href="/Eventosfaculdade/public/index.php" class="btn btn-outline-light btn-sm me-2">Sair</a>
-            </li>
-        </ul>
-    </nav>
-</header>
+        <div>
+            <img src="/Eventosfaculdade/public/uploads/Logo_FPM.png" alt="Logo" style="height: 70px;">
+        </div>
+        <h1 class="m-0">Bem-vindo, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!</h1>
+        <nav>
+            <ul class="list-unstyled d-flex m-0">
+                <li class="me-3">
+                    <a href="/Eventosfaculdade/src/views/dashboard/eventos_disponiveis.php" class="btn btn-outline-light btn-sm me-2">Ver Eventos Disponíveis</a>
+                </li>
+                <li>
+                    <a href="/Eventosfaculdade/src/views/dashboard/perfil.php" class="btn btn-outline-light btn-sm me-2">Meu Perfil</a>
+                </li>
+                <li>
+                    <a href="/Eventosfaculdade/public/index.php" class="btn btn-outline-light btn-sm me-2">Sair</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
 
-
-    <!-- Conteúdo Principal -->
+    <!-- Mensagens de feedback -->
     <main class="container mt-5">
+        <?php if (isset($_GET['status'])): ?>
+            <div class="alert <?php echo ($_GET['status'] === 'cancel_success') ? 'alert-success' : 'alert-danger'; ?> text-center">
+                <?php
+                if ($_GET['status'] === 'cancel_success') {
+                    echo "Inscrição cancelada com sucesso!";
+                } elseif ($_GET['status'] === 'error_db') {
+                    echo "Erro ao cancelar a inscrição. Por favor, tente novamente.";
+                } elseif ($_GET['status'] === 'error_permission') {
+                    echo "Erro: Você não tem permissão para cancelar esta inscrição.";
+                }
+                ?>
+            </div>
+        <?php endif; ?>
+
         <h2 class="mb-4">Meus Eventos</h2>
         <div class="row">
             <?php if (!empty($eventosInscritos)): ?>
@@ -85,7 +98,6 @@ function formatarData($data) {
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="bg-secondary text-white text-center py-3">
         <p>&copy; <?php echo date('Y'); ?> Sistema de Eventos Acadêmicos</p>
     </footer>

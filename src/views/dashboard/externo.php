@@ -35,27 +35,44 @@ function formatarData($data) {
 <body class="bg-light">
     <!-- Header -->
     <header class="d-flex align-items-center justify-content-between py-3 px-4 bg-secondary text-white">
-    <div>
-        <img src="/Eventosfaculdade/public/uploads/Logo_FPM.png" alt="Logo" style="height: 70px;">
-    </div>
-    <h1 class="m-0">Bem-vindo, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!</h1>
-    <nav>
-        <ul class="list-unstyled d-flex m-0">
-            <li class="me-3">
-                <a href="/Eventosfaculdade/src/views/dashboard/eventos_disponiveis.php" class="btn btn-outline-light btn-sm me-2">Ver Eventos Disponíveis</a>
-            </li>
-            <li>
-                <a href="/Eventosfaculdade/src/views/dashboard/perfil_externo.php" class="btn btn-outline-light btn-sm me-2">Perfil</a>
-            </li>
-            <li>
-                <a href="/Eventosfaculdade/public/index.php" class="btn btn-outline-light btn-sm me-2">Sair</a>
-            </li>
-        </ul>
-    </nav>
+        <div>
+            <img src="/Eventosfaculdade/public/uploads/Logo_FPM.png" alt="Logo" style="height: 70px;">
+        </div>
+        <h1 class="m-0">Bem-vindo, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!</h1>
+        <nav>
+            <ul class="list-unstyled d-flex m-0">
+                <li class="me-3">
+                    <a href="/Eventosfaculdade/src/views/dashboard/eventos_disponiveis.php" class="btn btn-outline-light btn-sm me-2">Ver Eventos Disponíveis</a>
+                </li>
+                <li>
+                    <a href="/Eventosfaculdade/src/views/dashboard/perfil_externo.php" class="btn btn-outline-light btn-sm me-2">Perfil</a>
+                </li>
+                <li>
+                    <a href="/Eventosfaculdade/public/index.php" class="btn btn-outline-light btn-sm me-2">Sair</a>
+                </li>
+            </ul>
+        </nav>
     </header>
 
-    <!-- Conteúdo Principal -->
+    <!-- Mensagens de Feedback -->
     <main class="container mt-5">
+        <?php if (isset($_GET['status'])): ?>
+            <div class="alert text-center 
+                <?php echo $_GET['status'] === 'cancel_success' ? 'alert-success' : 'alert-danger'; ?>">
+                <?php
+                switch ($_GET['status']) {
+                    case 'cancel_success':
+                        echo 'Inscrição cancelada com sucesso!';
+                        break;
+                    case 'error':
+                        echo 'Ocorreu um erro ao processar sua solicitação.';
+                        break;
+                }
+                ?>
+            </div>
+        <?php endif; ?>
+
+        <!-- Eventos Inscritos -->
         <h2 class="mb-4">Meus Eventos</h2>
         <div class="row">
             <?php if (!empty($eventosInscritos)): ?>

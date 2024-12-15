@@ -37,23 +37,46 @@ function formatarData($data) {
 <body>
     <!-- Header -->
     <header class="d-flex align-items-center justify-content-between py-3 px-4 bg-secondary text-white">
-    <div>
-        <img src="/Eventosfaculdade/public/uploads/Logo_FPM.png" alt="Logo" style="height: 70px;">
-    </div>
-    <h1 class="m-0">Bem-vindo, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!</h1>
-    <nav>
-        <ul class="list-unstyled d-flex m-0">
-            
-        
-            <li>
-                <a href="/Eventosfaculdade/public/index.php" class="btn btn-outline-light btn-sm me-4">Sair</a>
-            </li>
-        </ul>
-    </nav>
-</header>
+        <div>
+            <img src="/Eventosfaculdade/public/uploads/Logo_FPM.png" alt="Logo" style="height: 70px;">
+        </div>
+        <h1 class="m-0">Bem-vindo, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!</h1>
+        <nav>
+            <ul class="list-unstyled d-flex m-0">
+                <li>
+                    <a href="/Eventosfaculdade/public/index.php" class="btn btn-outline-light btn-sm me-4">Sair</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
 
     <!-- Conteúdo Principal -->
     <main class="container mt-5">
+        <!-- Mensagem de Feedback -->
+        <?php if (isset($_GET['status'])): ?>
+            <div class="alert <?php echo $_GET['status'] === 'success' ? 'alert-success' : 'alert-danger'; ?> text-center">
+                <?php
+                switch ($_GET['status']) {
+                    case 'success':
+                        echo 'Inscrição realizada com sucesso!';
+                        break;
+                    case 'cancel_success':
+                        echo 'Inscrição cancelada com sucesso!';
+                        break;
+                    case 'full':
+                        echo 'Este evento não possui mais vagas disponíveis.';
+                        break;
+                    case 'closed':
+                        echo 'A inscrição para este evento foi encerrada.';
+                        break;
+                    default:
+                        echo 'Ocorreu um erro ao processar sua solicitação.';
+                        break;
+                }
+                ?>
+            </div>
+        <?php endif; ?>
+
         <div class="row">
             <?php if (!empty($eventosDisponiveis)): ?>
                 <?php foreach ($eventosDisponiveis as $evento): ?>

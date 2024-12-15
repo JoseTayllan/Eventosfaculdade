@@ -2,8 +2,8 @@
 require_once '../../config/database.php';
 session_start();
 
-// Verifica se o aluno está logado
-if (!isset($_SESSION['user_id']) || ($_SESSION['user_type'] !== 'Interno' && $_SESSION['user_type'] !== 'Externo')) {
+// Verifica se o aluno está logado como Interno ou Externo
+if (!isset($_SESSION['user_id']) || !in_array($_SESSION['user_type'], ['Interno', 'Externo'])) {
     header("Location: /Eventosfaculdade/src/views/usuarios/login.php");
     exit;
 }
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['inscricao_id'])) {
 
         if ($stmtCheck->rowCount() === 0) {
             $dashboard = ($_SESSION['user_type'] === 'Interno') ? 'interno.php' : 'externo.php';
-            header("Location: /Eventosfaculdade/src/views/dashboard/$dashboard?error=permissao");
+            header("Location: /Eventosfaculdade/src/views/dashboard/$dashboard?status=error_permission");
             exit;
         }
 
@@ -39,10 +39,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['inscricao_id'])) {
 
         // Redireciona com mensagem de sucesso
         $dashboard = ($_SESSION['user_type'] === 'Interno') ? 'interno.php' : 'externo.php';
-        header("Location: /Eventosfaculdade/src/views/dashboard/$dashboard?success=cancelado");
+        header("Location: /Eventosfaculdade/src/views/dashboard/$dashboard?status=cancel_success");
         exit;
+
     } catch (PDOException $e) {
-        die("Erro ao cancelar inscrição: " . $e->getMessage());
+        // Redireciona com mensagem de erro
+        $dashboard = ($_SESSION['user_type'] === 'Interno') ? 'interno.php' : 'externo.php';
+        header("Location: /Eventosfaculdade/src/views/dashboard/$dashboard?status=error_db");
+        exit;
     }
 }
 ?>

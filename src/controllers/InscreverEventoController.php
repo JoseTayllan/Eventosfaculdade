@@ -31,8 +31,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento_id'])) {
 
         // Verifica se há vagas disponíveis
         if ($evento['VagasDisponiveis'] <= 0) {
-            echo "Este evento não possui mais vagas disponíveis.";
+            header("Location: /Eventosfaculdade/src/views/dashboard/eventos_disponiveis.php?status=full");
             exit;
+
         }
 
         // Extrai e valida os dados de data e hora
@@ -54,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento_id'])) {
 
         // Verifica se faltam menos de 5 minutos para o evento
         if ($intervaloSegundos <= 0 || $intervaloSegundos < 300) {
-            echo "A inscrição para este evento foi encerrada.";
+            header("Location: /Eventosfaculdade/src/views/dashboard/eventos_disponiveis.php?status=closed");
             exit;
         }
 
@@ -76,9 +77,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento_id'])) {
         $stmt = $pdo->prepare("UPDATE Eventos SET VagasDisponiveis = VagasDisponiveis - 1 WHERE EventoId = ?");
         $stmt->execute([$eventoId]);
 
-        echo "Inscrição realizada com sucesso!";
+        header("Location: /Eventosfaculdade/src/views/dashboard/eventos_disponiveis.php?status=success");
+        exit;
+
     } catch (Exception $e) {
-        echo "Erro ao realizar inscrição: " . $e->getMessage();
+        header("Location: /Eventosfaculdade/src/views/dashboard/eventos_disponiveis.php?status=cancel_success");
+        exit;
+
     }
 } else {
     echo "Requisição inválida.";
