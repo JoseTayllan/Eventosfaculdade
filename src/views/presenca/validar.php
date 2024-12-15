@@ -68,16 +68,18 @@ $inscritos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </table>
 
             <!-- Botão para Salvar Presenças -->
-            <div class="text-center mt-4">
-                <button type="submit" class="btn btn-primary">Salvar Presenças</button>
-            </div>
+            <?php if (!empty($inscritos)): ?>
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary">Salvar Presenças</button>
+                </div>
+            <?php endif; ?>
         </form>
     </div>
 
     <!-- Footer -->
     <footer class="bg-secondary text-white text-center py-3 mt-5 fixed-bottom">
-    <p class="m-0">&copy; 2024 Sistema de Eventos</p>
-</footer>
+        <p class="m-0">&copy; 2024 Sistema de Eventos</p>
+    </footer>
 
     <!-- Bootstrap JS -->
     <script src="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
