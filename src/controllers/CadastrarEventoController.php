@@ -1,39 +1,66 @@
 <?php
 require_once '../../config/database.php';
+session_start();
 
+if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'Admin') {
+    header("Location: /Eventosfaculdade/src/views/admin/login.php");
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Dados do formulário
     $nome = $_POST['nome'];
     $dataInicio = $_POST['data_inicio'];
     $dataFim = $_POST['data_fim'];
     $horarioInicio = $_POST['horario_inicio'];
     $horarioTermino = $_POST['horario_termino'];
     $local = $_POST['local'];
-    $tipo = $_POST['tipo'];
-    $departamentoId = $_POST['departamento'];
+    $departamento = $_POST['departamento'];
+    $palestrante = $_POST['palestrante'];
     $cargaHoraria = $_POST['carga_horaria'];
     $descricao = $_POST['descricao'];
-    $palestranteId = $_POST['palestrante'];
+    $vagas = $_POST['vagas']; // Adicionado
 
+    // Upload da imagem
+    $imagem = null;
+    if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
+        $extensao = pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
+        $nomeImagem = uniqid('evento_', true) . '.' . $extensao;
+        $caminhoImagem = '../../public/uploads/' . $nomeImagem;
+
+        if (move_uploaded_file($_FILES['imagem']['tmp_name'], $caminhoImagem)) {
+            $imagem = '/Eventosfaculdade/public/uploads/' . $nomeImagem;
+        } else {
+            die("Erro ao fazer o upload da imagem.");
+        }
+    }
+
+    // Inserção no banco de dados
     try {
-        $sql = "INSERT INTO Eventos (NomeEvento, DataInicioEvento, DataFimEvento, HorarioInicio, HorarioTermino, LocalEvento, TipoEvento, DepartamentoEventoId, CargaHoraria, DescricaoEvento, PalestranteId)
-                VALUES (:nome, :data_inicio, :data_fim, :horario_inicio, :horario_termino, :local, :tipo, :departamento, :carga_horaria, :descricao, :palestrante)";
+        $sql = "INSERT INTO Eventos 
+                (NomeEvento, DataInicioEvento, DataFimEvento, HorarioInicio, HorarioTermino, LocalEvento, DepartamentoEventoId, 
+                 PalestranteId, CargaHoraria, DescricaoEvento, ImagemEvento, VagasDisponiveis) 
+                VALUES 
+                (:nome, :dataInicio, :dataFim, :horarioInicio, :horarioTermino, :local, :departamento, :palestrante, 
+                 :cargaHoraria, :descricao, :imagem, :vagas)";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
             ':nome' => $nome,
-            ':data_inicio' => $dataInicio,
-            ':data_fim' => $dataFim,
-            ':horario_inicio' => $horarioInicio,
-            ':horario_termino' => $horarioTermino,
+            ':dataInicio' => $dataInicio,
+            ':dataFim' => $dataFim,
+            ':horarioInicio' => $horarioInicio,
+            ':horarioTermino' => $horarioTermino,
             ':local' => $local,
-            ':tipo' => $tipo,
-            ':departamento' => $departamentoId,
-            ':carga_horaria' => $cargaHoraria,
+            ':departamento' => $departamento,
+            ':palestrante' => $palestrante,
+            ':cargaHoraria' => $cargaHoraria,
             ':descricao' => $descricao,
-            ':palestrante' => $palestranteId
+            ':imagem' => $imagem,
+            ':vagas' => $vagas,
         ]);
-        header("Location: /Eventosfaculdade/src/views/eventos/cadastro_sucesso.php");
-        exit;        
+
+        header("Location: /Eventosfaculdade/src/views/dashboard/admin.php?success=evento_cadastrado");
+        exit;
     } catch (PDOException $e) {
         die("Erro ao cadastrar evento: " . $e->getMessage());
     }

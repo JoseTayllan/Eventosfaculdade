@@ -8,11 +8,20 @@
 </head>
 <body>
     <h1>Login</h1>
+    
+    <?php
+    // Exibe mensagem de erro, se houver
+    if (isset($_GET['error'])) {
+        echo '<p style="color: red;">' . htmlspecialchars($_GET['error']) . '</p>';
+    }
+    ?>
+
     <form method="POST" action="/Eventosfaculdade/src/controllers/LoginController.php">
         <input type="email" name="email" placeholder="E-mail" required>
         <input type="password" name="senha" placeholder="Senha" required>
         <button type="submit">Entrar</button>
     </form>
+    
     <p>Não tem uma conta? <a href="register.php">Registre-se aqui</a>.</p>
 </body>
 </html>
