@@ -76,7 +76,12 @@ function formatarData($data) {
                 <?php foreach ($eventosInscritos as $evento): ?>
                     <div class="col-md-6 col-lg-4 mb-4">
                         <div class="card h-100 shadow-sm">
-                            <img src="<?php echo htmlspecialchars($evento['ImagemEvento'] ?: '/Eventosfaculdade/public/images/default-evento.jpg'); ?>" class="card-img-top" alt="Imagem do Evento">
+                            
+                            <?php if (!empty($evento['ImagemEvento'])): ?>
+                                <img src="<?php echo htmlspecialchars($evento['ImagemEvento']); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($evento['NomeEvento']); ?>" style="height: 200px; object-fit: cover;">
+                            <?php else: ?>
+                                <img src="/Eventosfaculdade/public/images/default-evento.jpg" class="card-img-top" alt="Imagem Padrão" style="height: 200px; object-fit: cover;">
+                            <?php endif; ?>
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo htmlspecialchars($evento['NomeEvento'] ?? 'Evento sem nome'); ?></h5>
                                 <p class="card-text"><strong>Data:</strong> <?php echo htmlspecialchars(formatarData($evento['DataInicioEvento'] ?? '0000-00-00')); ?> a <?php echo htmlspecialchars(formatarData($evento['DataFimEvento'] ?? '0000-00-00')); ?></p>
