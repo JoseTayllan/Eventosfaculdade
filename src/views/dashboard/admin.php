@@ -63,6 +63,9 @@ $_SESSION['LAST_ACTIVITY'] = time();
                     <a href="/Eventosfaculdade/src/views/departamentos/cadastrar.php" class="text-decoration-none">Cadastrar Departamento</a>
                 </li>
                 <li class="list-group-item">
+                    <a href="/Eventosfaculdade/src/views/departamentos/excluir.php" class="text-decoration-none">Excluir Departamento</a>
+                </li>
+                <li class="list-group-item">
                     <a href="/Eventosfaculdade/src/views/presenca/listar_eventos.php" class="text-decoration-none">Validar Presenças</a>
                 </li>
                 <li class="list-group-item">
