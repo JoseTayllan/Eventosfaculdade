@@ -9,7 +9,7 @@
 </head>
 <body>
     <!-- Header -->
-    <header class="bg-secondary text-white py-3">
+    <header class="custom-ocea text-white py-3">
         <div class="container d-flex align-items-center justify-content-between">
             <!-- Logo do Cliente -->
             <div>

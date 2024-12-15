@@ -30,6 +30,7 @@ $email = htmlspecialchars($aluno['EmailParticipante'] ?? '');
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
+<link rel="stylesheet" href="/Eventosfaculdade/public/stile/stile.css">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,7 +39,7 @@ $email = htmlspecialchars($aluno['EmailParticipante'] ?? '');
 </head>
 <body class="bg-light">
     <!-- Header -->
-    <header class="bg-secondary text-white py-3">
+    <header class="custom-ocean text-white py-3">
     <div class="container d-flex align-items-center justify-content-between">
         <!-- Logo no lado esquerdo -->
         <a href="/Eventosfaculdade">
@@ -51,7 +52,7 @@ $email = htmlspecialchars($aluno['EmailParticipante'] ?? '');
         </div>
     </div>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-secondary">
+    <nav class="navbar navbar-expand-lg custom-ocea">
         <div class="container">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -91,7 +92,7 @@ $email = htmlspecialchars($aluno['EmailParticipante'] ?? '');
                                 <label for="email" class="form-label">E-mail</label>
                                 <input type="email" id="email" name="email" class="form-control" value="<?php echo $email; ?>" required>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">Atualizar Dados</button>
+                            <button type="submit" class="btn custom-ocean w-100">Atualizar Dados</button>
                         </form>
                     </div>
                 </div>
@@ -113,7 +114,7 @@ $email = htmlspecialchars($aluno['EmailParticipante'] ?? '');
                                 <label for="confirma_senha" class="form-label">Confirmar Nova Senha</label>
                                 <input type="password" id="confirma_senha" name="confirma_senha" class="form-control">
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">Atualizar Senha</button>
+                            <button type="submit" class="btn custom-ocean w-100">Atualizar Senha</button>
                         </form>
                     </div>
                 </div>

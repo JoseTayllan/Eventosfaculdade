@@ -23,6 +23,7 @@ try {
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+<link rel="stylesheet" href="/Eventosfaculdade/public/stile/stile.css">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,7 +35,7 @@ try {
 </head>
 <body>
     <!-- Header -->
-    <header class="bg-secondary text-white py-3 d-flex align-items-center">
+    <header class="custom-ocean text-white py-3 d-flex align-items-center">
         <img src="/Eventosfaculdade/public/uploads/Logo_FPM.png" alt="Logo" style="height: 70px;" class="ms-3">
         <h1 class="m-0 text-center w-100">Inscrições por Evento</h1>
     </header>
@@ -83,7 +84,7 @@ try {
     </div>
 
     <!-- Footer -->
-    <footer class="bg-secondary text-white text-center py-3 mt-5 fixed-bottom">
+    <footer class="custom-ocean text-white text-center py-3 mt-5 fixed-bottom">
     <p class="m-0">&copy; 2024 Sistema de Eventos</p>
 </footer>
 

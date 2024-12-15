@@ -28,6 +28,7 @@ function formatarData($data) {
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
+<link rel="stylesheet" href="/Eventosfaculdade/public/stile/stile.css">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,7 +37,7 @@ function formatarData($data) {
 </head>
 <body>
     <!-- Header -->
-    <header class="d-flex align-items-center justify-content-between py-3 px-4 bg-secondary text-white">
+    <header class="d-flex align-items-center justify-content-between py-3 px-4 custom-ocean text-white">
         <div>
             <img src="/Eventosfaculdade/public/uploads/Logo_FPM.png" alt="Logo" style="height: 70px;">
         </div>
@@ -100,7 +101,7 @@ function formatarData($data) {
                                 <p class="card-text"><strong>Vagas Disponíveis:</strong> <?php echo htmlspecialchars($evento['VagasDisponiveis']); ?></p>
                                 <form method="POST" action="/Eventosfaculdade/src/controllers/InscreverEventoController.php">
                                     <input type="hidden" name="evento_id" value="<?php echo $evento['EventoId']; ?>">
-                                    <button class="btn btn-primary w-100">Inscrever-se</button>
+                                    <button class="btn custom-ocean w-100">Inscrever-se</button>
                                 </form>
                             </div>
                         </div>
@@ -113,7 +114,7 @@ function formatarData($data) {
     </main>
 
     <!-- Footer -->
-    <footer class="bg-secondary text-white text-center py-3 mt-5 fixed-bottom">
+    <footer class="custom-ocean text-white text-center py-3 mt-5 fixed-bottom">
     <p class="m-0">&copy; 2024 Sistema de Eventos</p>
 </footer>
 </body>

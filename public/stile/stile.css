@@ -1,0 +1,10 @@
+/* Fundo personalizado */
+.custom-ocean {
+    background-color: #014B6A !important;
+    color: white !important;
+}
+
+/* Texto personalizado */
+.custom-ocean -text {
+    color: #014B6A !important;
+}

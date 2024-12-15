@@ -20,6 +20,8 @@ function formatarData($data) {
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
+<link rel="stylesheet" href="/Eventosfaculdade/public/stile/stile.css">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,14 +31,14 @@ function formatarData($data) {
 </head>
 <body>
 <!-- Header -->
-<header class="bg-secondary text-white text-center py-3">
+<header class="custom-ocean text-white text-center py-3">
     <h1>Sistema de Eventos Acadêmicos</h1>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+    <nav class="navbar navbar-expand-lg navbar-dark custom-ocean">
         <div class="container">
             <!-- Logo -->
             <a href="#" class="navbar-brand d-flex align-items-center">
                 <img src="/Eventosfaculdade/public/uploads/Logo_FPM.png" alt="Logo" class="me-2" style="height: 70px;"> 
-                Eventos Acadêmicos
+                
             </a>
             <!-- Navbar Toggler -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -111,7 +113,7 @@ function formatarData($data) {
                                 <p class="card-text"><strong>Horário:</strong> <?php echo htmlspecialchars($evento['HorarioInicio']); ?> - <?php echo htmlspecialchars($evento['HorarioTermino']); ?></p>
                                 <p class="card-text"><strong>Local:</strong> <?php echo htmlspecialchars($evento['LocalEvento']); ?></p>
                                 <p class="card-text"><strong>Palestrante:</strong> <?php echo htmlspecialchars($evento['Palestrante'] ?? 'Não informado'); ?></p>
-                                <a href="/Eventosfaculdade/src/views/usuarios/login.php?redirect=inscricao&evento_id=<?php echo $evento['EventoId']; ?>" class="btn btn-primary mt-auto">Inscrever-se</a>
+                                <a href="/Eventosfaculdade/src/views/usuarios/login.php?redirect=inscricao&evento_id=<?php echo $evento['EventoId']; ?>" class="btn custom-ocean mt-auto">Inscrever-se</a>
                             </div>
                         </div>
                     </div>
@@ -127,9 +129,10 @@ function formatarData($data) {
     </main>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-3 mt-5">
-        <p>&copy; <?php echo date('Y'); ?> Sistema de Eventos Acadêmicos</p>
-    </footer>
+    <footer class="custom-ocean text-white text-center py-3 mt-5">
+    <p>&copy; <?php echo date('Y'); ?> Sistema de Eventos Acadêmicos</p>
+</footer>
+
 
     <!-- Bootstrap JS -->
     <script src="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
