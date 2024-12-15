@@ -38,21 +38,36 @@ $email = htmlspecialchars($aluno['EmailParticipante'] ?? '');
 </head>
 <body class="bg-light">
     <!-- Header -->
-    <header class="bg-secondary text-white text-center py-3">
-        <h1>Bem-vindo, <?php echo $nome; ?>!</h1>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="/Eventosfaculdade/src/views/dashboard/externo.php">Dashboard</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/Eventosfaculdade/src/controllers/LogoutController.php">Sair</a></li>
-                    </ul>
-                </div>
+    <header class="bg-secondary text-white py-3">
+    <div class="container d-flex align-items-center justify-content-between">
+        <!-- Logo no lado esquerdo -->
+        <a href="/Eventosfaculdade">
+            <img src="/Eventosfaculdade/public/uploads/Logo_FPM.png" alt="Logo" style="height: 70px;">
+        </a>
+        <!-- Título e informações -->
+        <div class="text-center flex-grow-1">
+            <h1 class="m-0">Bem-vindo, <?php echo htmlspecialchars($aluno['NomeParticipante'] ?? 'Usuário'); ?>!</h1>
+            <p class="m-0"><strong>Número de Matrícula:</strong> <?php echo htmlspecialchars($aluno['NumeroMatricula'] ?? 'Não informado'); ?></p>
+        </div>
+    </div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-secondary">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light btn-sm me-2" href="/Eventosfaculdade/src/views/dashboard/externo.php">Meus cursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light btn-sm" href="/Eventosfaculdade/public/index.php">Sair</a>
+                    </li>
+                </ul>
             </div>
-        </nav>
+        </div>
+    </nav>
     </header>
 
     <!-- Conteúdo Principal -->

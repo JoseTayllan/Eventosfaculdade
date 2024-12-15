@@ -11,8 +11,9 @@
 </head>
 <body>
     <!-- Header -->
-    <header class="bg-secondary text-white text-center py-3">
-        <h1>Sistema de Eventos</h1>
+    <header class="bg-secondary text-white py-3 d-flex align-items-center">
+    <img src="/Eventosfaculdade/public/uploads/Logo_FPM.png" alt="Logo" style="height: 70px;" class="ms-3">
+    <h1 class="m-0 text-center w-100">Sistema de Eventos</h1>
     </header>
     
     <!-- Conteúdo Principal -->

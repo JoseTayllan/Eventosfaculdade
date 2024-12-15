@@ -36,26 +36,21 @@ function formatarData($data) {
 </head>
 <body>
     <!-- Header -->
-    <header class="bg-secondary text-white text-center py-3">
-        <h1>Eventos Disponíveis</h1>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Eventosfaculdade/src/views/dashboard/<?php echo $userType === 'Interno' ? 'interno.php' : 'externo.php'; ?>">Meus Eventos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Eventosfaculdade/src/controllers/LogoutController.php">Sair</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <header class="d-flex align-items-center justify-content-between py-3 px-4 bg-secondary text-white">
+    <div>
+        <img src="/Eventosfaculdade/public/uploads/Logo_FPM.png" alt="Logo" style="height: 70px;">
+    </div>
+    <h1 class="m-0">Bem-vindo, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!</h1>
+    <nav>
+        <ul class="list-unstyled d-flex m-0">
+            
+        
+            <li>
+                <a href="/Eventosfaculdade/public/index.php" class="btn btn-outline-light btn-sm me-4">Sair</a>
+            </li>
+        </ul>
+    </nav>
+</header>
 
     <!-- Conteúdo Principal -->
     <main class="container mt-5">
@@ -89,7 +84,7 @@ function formatarData($data) {
     </main>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-3">
+    <footer class="bg-secondary text-white text-center py-3">
         <p>&copy; <?php echo date('Y'); ?> Sistema de Eventos Acadêmicos</p>
     </footer>
 </body>
