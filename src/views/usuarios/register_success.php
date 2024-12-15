@@ -10,7 +10,7 @@
 <body class="bg-light d-flex align-items-center justify-content-center vh-100">
     <div class="container text-center">
         <div class="card shadow-lg p-4 border-0" style="max-width: 500px; margin: auto;">
-            <h1 class="text-success fw-bold">Registro Realizado com Sucesso!</h1>
+            <h1 class="text-secondary fw-bold">Registro Realizado com Sucesso!</h1>
             <p class="mt-3 text-secondary">Seu registro foi concluído. Você já pode fazer login no sistema.</p>
             <a href="login.php" class="btn btn-primary mt-4 px-4 py-2">Clique aqui para fazer login</a>
         </div>

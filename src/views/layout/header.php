@@ -1,4 +1,3 @@
-<!-- header.php -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -11,12 +10,24 @@
 <body>
     <!-- Header -->
     <header class="bg-secondary text-white py-3">
-        <div class="container text-center">
-            <h1 class="m-0">Sistema de Eventos</h1>
-            <nav class="mt-3">
+        <div class="container d-flex align-items-center justify-content-between">
+            <!-- Logo do Cliente -->
+            <div>
+                <img src="public/images/Logo_FPM.png" alt="Logo Cliente" style="height: 60px; width: auto;">
+            </div>
+
+            <!-- Título -->
+            <div>
+                <h1 class="m-0 text-center">Sistema de Eventos</h1>
+            </div>
+
+            <!-- Navegação -->
+            <nav>
                 <a href="index.php" class="text-white me-3">Home</a>
                 <a href="eventos/listar.php" class="text-white me-3">Eventos</a>
                 <a href="usuarios/login.php" class="text-white">Login</a>
             </nav>
         </div>
     </header>
+</body>
+</html>

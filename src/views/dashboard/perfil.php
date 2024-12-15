@@ -12,6 +12,12 @@ $alunoId = $_SESSION['user_id'] ?? null;
 $mensagemSucesso = "";
 $mensagemErro = "";
 
+// Verifica se o ID do aluno está definido
+if (!$alunoId) {
+    echo "<p>Usuário não autenticado. Faça login novamente.</p>";
+    exit;
+}
+
 // Processa atualização de dados
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['nova_senha']) && isset($_POST['confirma_senha'])) {
@@ -63,7 +69,7 @@ $stmtAluno->execute([':aluno_id' => $alunoId]);
 $aluno = $stmtAluno->fetch(PDO::FETCH_ASSOC);
 
 if (!$aluno) {
-    echo "Usuário não encontrado.";
+    echo "<p>Usuário não encontrado. Faça login novamente.</p>";
     exit;
 }
 ?>
@@ -73,62 +79,97 @@ if (!$aluno) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Perfil</title>
-    <link rel="stylesheet" href="/Eventosfaculdade/public/css/style.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/css/bootstrap.min.css">
 </head>
-<body>
-    <header>
+<body class="bg-light">
+    <!-- Header -->
+    <header class="bg-secondary text-white text-center py-3">
         <h1>Bem-vindo, <?php echo htmlspecialchars($aluno['NomeParticipante'] ?? 'Usuário'); ?>!</h1>
         <p><strong>Número de Matrícula:</strong> <?php echo htmlspecialchars($aluno['NumeroMatricula'] ?? 'Não informado'); ?></p>
-        <nav>
-            <ul>
-                <li><a href="/Eventosfaculdade/src/views/dashboard/interno.php">Dashboard</a></li>
-                <li><a href="/Eventosfaculdade/src/controllers/LogoutController.php">Sair</a></li>
-            </ul>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="/Eventosfaculdade/src/views/dashboard/interno.php">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Eventosfaculdade/src/controllers/LogoutController.php">Sair</a></li>
+                    </ul>
+                </div>
+            </div>
         </nav>
     </header>
 
-    <main>
-        <!-- Mensagem de sucesso ou erro -->
+    <!-- Conteúdo Principal -->
+    <main class="container-lg mt-5">
+        <!-- Mensagem de Sucesso ou Erro -->
         <?php if (!empty($mensagemSucesso)): ?>
-            <p style="color: green;"> <?php echo $mensagemSucesso; ?> </p>
+            <div class="alert alert-success text-center"><?php echo $mensagemSucesso; ?></div>
         <?php endif; ?>
         <?php if (!empty($mensagemErro)): ?>
-            <p style="color: red;"> <?php echo $mensagemErro; ?> </p>
+            <div class="alert alert-danger text-center"><?php echo $mensagemErro; ?></div>
         <?php endif; ?>
 
-        <h2>Atualizar Informações</h2>
-        <form method="POST" action="">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" value="<?php echo htmlspecialchars($aluno['NomeParticipante']); ?>" required>
-            <br>
-            <label for="matricula">Número de Matrícula:</label>
-            <input type="text" id="matricula" name="matricula" value="<?php echo htmlspecialchars($aluno['NumeroMatricula']); ?>" required>
-            <br>
-            <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($aluno['EmailParticipante']); ?>" required>
-            <br>
-            <button type="submit">Atualizar Dados</button>
-        </form>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg mb-4">
+                    <div class="card-body">
+                        <h2 class="text-center mb-4 text-primary">Atualizar Informações</h2>
+                        <form method="POST" action="">
+                            <div class="mb-3">
+                                <label for="nome" class="form-label">Nome</label>
+                                <input type="text" id="nome" name="nome" class="form-control" value="<?php echo htmlspecialchars($aluno['NomeParticipante']); ?>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="matricula" class="form-label">Número de Matrícula</label>
+                                <input type="text" id="matricula" name="matricula" class="form-control" value="<?php echo htmlspecialchars($aluno['NumeroMatricula']); ?>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">E-mail</label>
+                                <input type="email" id="email" name="email" class="form-control" value="<?php echo htmlspecialchars($aluno['EmailParticipante']); ?>" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Atualizar Dados</button>
+                        </form>
+                    </div>
+                </div>
 
-        <h2>Atualizar Senha</h2>
-        <form method="POST" action="">
-            <label for="nova_senha">Nova Senha:</label>
-            <input type="password" id="nova_senha" name="nova_senha">
-            <br>
-            <label for="confirma_senha">Confirmar Nova Senha:</label>
-            <input type="password" id="confirma_senha" name="confirma_senha">
-            <br>
-            <button type="submit">Atualizar Senha</button>
-        </form>
+                <div class="card shadow-lg mb-4">
+                    <div class="card-body">
+                        <h2 class="text-center mb-4 text-primary">Atualizar Senha</h2>
+                        <form method="POST" action="">
+                            <div class="mb-3">
+                                <label for="nova_senha" class="form-label">Nova Senha</label>
+                                <input type="password" id="nova_senha" name="nova_senha" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirma_senha" class="form-label">Confirmar Nova Senha</label>
+                                <input type="password" id="confirma_senha" name="confirma_senha" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Atualizar Senha</button>
+                        </form>
+                    </div>
+                </div>
 
-        <h2>Excluir Perfil</h2>
-        <form method="POST" action="" onsubmit="return confirm('Tem certeza que deseja excluir sua conta? Esta ação é irreversível.');">
-            <button type="submit" name="delete_profile" style="color: red;">Excluir Perfil</button>
-        </form>
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h2 class="text-center mb-4 text-danger">Excluir Perfil</h2>
+                        <form method="POST" action="" onsubmit="return confirm('Tem certeza que deseja excluir sua conta? Esta ação é irreversível.');">
+                            <button type="submit" name="delete_profile" class="btn btn-danger w-100">Excluir Perfil</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <footer>
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-5">
         <p>&copy; <?php echo date('Y'); ?> Sistema de Eventos Acadêmicos</p>
     </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -45,98 +45,111 @@ function formatarData($data) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard do Aluno Externo</title>
-    <link rel="stylesheet" href="/Eventosfaculdade/public/css/style.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/css/bootstrap.min.css">
 </head>
-<body>
-    <header>
+<body class="bg-light">
+    <!-- Header -->
+    <header class="bg-secondary text-white text-center py-3">
         <h1>Bem-vindo, <?php echo htmlspecialchars($_SESSION['user_name'] ?? 'Usuário'); ?>!</h1>
-        <nav>
-            <ul>
-                <li><a href="/Eventosfaculdade/src/views/dashboard/perfil_externo.php">Meu Perfil</a></li>
-                <li><a href="/Eventosfaculdade/src/controllers/LogoutController.php">Sair</a></li>
-            </ul>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="/Eventosfaculdade/src/views/dashboard/perfil_externo.php">Meu Perfil</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Eventosfaculdade/src/controllers/LogoutController.php">Sair</a></li>
+                    </ul>
+                </div>
+            </div>
         </nav>
     </header>
 
-    <main>
-        <!-- Mensagem de erro ou sucesso -->
-        <?php if (isset($_GET['error']) && $_GET['error'] === 'sem_vagas'): ?>
-            <p style="color: red;">Este evento não possui mais vagas disponíveis.</p>
-        <?php elseif (isset($_GET['error']) && $_GET['error'] === 'inscricao_fechada'): ?>
-            <p style="color: red;">A inscrição para este evento foi encerrada.</p>
+    <!-- Conteúdo Principal -->
+    <main class="container mt-5">
+        <!-- Mensagens -->
+        <?php if (isset($_GET['error']) || isset($_GET['success'])): ?>
+            <div class="alert <?php echo isset($_GET['error']) ? 'alert-danger' : 'alert-success'; ?> text-center">
+                <?php
+                if (isset($_GET['error'])) {
+                    echo htmlspecialchars($_GET['error'] === 'sem_vagas' ? 'Este evento não possui mais vagas disponíveis.' : 'A inscrição para este evento foi encerrada.');
+                } elseif (isset($_GET['success'])) {
+                    echo htmlspecialchars('Inscrição realizada com sucesso!');
+                }
+                ?>
+            </div>
         <?php endif; ?>
 
-        <?php if (isset($_GET['success']) && $_GET['success'] === 'inscrito'): ?>
-            <p style="color: green;">Inscrição realizada com sucesso!</p>
-        <?php endif; ?>
-
-        <h2>Meus Eventos</h2>
-        <ul>
+        <!-- Eventos Inscritos -->
+        <h2 class="mb-4">Meus Eventos</h2>
+        <div class="row">
             <?php if (!empty($eventosInscritos)): ?>
                 <?php foreach ($eventosInscritos as $evento): ?>
-                    <li>
-                        <?php if (!empty($evento['ImagemEvento'])): ?>
-                            <img src="<?php echo htmlspecialchars($evento['ImagemEvento']); ?>" alt="Imagem do Evento" style="width: 100px; height: auto;">
-                        <?php endif; ?>
-                        <h3><?php echo htmlspecialchars($evento['NomeEvento']); ?></h3>
-                        <p><strong>Data:</strong> <?php echo formatarData($evento['DataInicioEvento']); ?> a <?php echo formatarData($evento['DataFimEvento']); ?></p>
-                        <p><strong>Horário:</strong> <?php echo htmlspecialchars($evento['HorarioInicio']); ?> - <?php echo htmlspecialchars($evento['HorarioTermino']); ?></p>
-                        <p><strong>Local:</strong> <?php echo htmlspecialchars($evento['LocalEvento']); ?></p>
-                        <p><strong>Tipo:</strong> <?php echo htmlspecialchars($evento['TipoEvento']); ?></p>
-                        <p><strong>Palestrante:</strong> <?php echo htmlspecialchars($evento['Palestrante']); ?></p>
-                        <?php if (strtotime($evento['DataFimEvento']) < time()): ?>
-                            <p><strong>Comparecimento:</strong>
-                                <?php
-                                if ($evento['Compareceu'] === null) {
-                                    echo "Não registrado";
-                                } elseif ($evento['Compareceu'] === 1) {
-                                    echo "Compareceu";
-                                } else {
-                                    echo "Não Compareceu";
-                                }
-                                ?>
-                            </p>
-                        <?php endif; ?>
-                        <form method="POST" action="/Eventosfaculdade/src/controllers/CancelarInscricaoController.php">
-                            <input type="hidden" name="inscricao_id" value="<?php echo $evento['InscricaoId']; ?>">
-                            <button type="submit">Cancelar Inscrição</button>
-                        </form>
-                    </li>
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            <?php if (!empty($evento['ImagemEvento'])): ?>
+                                <img src="<?php echo htmlspecialchars($evento['ImagemEvento']); ?>" class="card-img-top" alt="Imagem do Evento">
+                            <?php else: ?>
+                                <img src="/Eventosfaculdade/public/images/default-evento.jpg" class="card-img-top" alt="Imagem Padrão">
+                            <?php endif; ?>
+                            <div class="card-body">
+                                <h5 class="card-title"><?php echo htmlspecialchars($evento['NomeEvento']); ?></h5>
+                                <p class="card-text"><strong>Data:</strong> <?php echo formatarData($evento['DataInicioEvento']); ?> a <?php echo formatarData($evento['DataFimEvento']); ?></p>
+                                <p class="card-text"><strong>Horário:</strong> <?php echo htmlspecialchars($evento['HorarioInicio']); ?> - <?php echo htmlspecialchars($evento['HorarioTermino']); ?></p>
+                                <p class="card-text"><strong>Local:</strong> <?php echo htmlspecialchars($evento['LocalEvento']); ?></p>
+                                <p class="card-text"><strong>Palestrante:</strong> <?php echo htmlspecialchars($evento['Palestrante']); ?></p>
+                                <form method="POST" action="/Eventosfaculdade/src/controllers/CancelarInscricaoController.php">
+                                    <input type="hidden" name="inscricao_id" value="<?php echo $evento['InscricaoId']; ?>">
+                                    <button class="btn btn-danger w-100">Cancelar Inscrição</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <p>Você não está inscrito em nenhum evento.</p>
+                <p class="text-center">Você não está inscrito em nenhum evento.</p>
             <?php endif; ?>
-        </ul>
+        </div>
 
-        <h2>Eventos Disponíveis</h2>
-        <ul>
+        <!-- Eventos Disponíveis -->
+        <h2 class="mb-4">Eventos Disponíveis</h2>
+        <div class="row">
             <?php if (!empty($eventosDisponiveis)): ?>
                 <?php foreach ($eventosDisponiveis as $evento): ?>
-                    <li>
-                        <?php if (!empty($evento['ImagemEvento'])): ?>
-                            <img src="<?php echo htmlspecialchars($evento['ImagemEvento']); ?>" alt="Imagem do Evento" style="width: 100px; height: auto;">
-                        <?php endif; ?>
-                        <h3><?php echo htmlspecialchars($evento['NomeEvento']); ?></h3>
-                        <p><strong>Departamento:</strong> <?php echo htmlspecialchars($evento['NomeDepartamento']); ?></p>
-                        <p><strong>Data:</strong> <?php echo formatarData($evento['DataInicioEvento']); ?> a <?php echo formatarData($evento['DataFimEvento']); ?></p>
-                        <p><strong>Horário:</strong> <?php echo htmlspecialchars($evento['HorarioInicio']); ?> - <?php echo htmlspecialchars($evento['HorarioTermino']); ?></p>
-                        <p><strong>Local:</strong> <?php echo htmlspecialchars($evento['LocalEvento']); ?></p>
-                        <p><strong>Tipo:</strong> <?php echo htmlspecialchars($evento['TipoEvento']); ?></p>
-                        <p><strong>Vagas Disponíveis:</strong> <?php echo htmlspecialchars($evento['VagasDisponiveis']); ?></p>
-                        <form method="POST" action="/Eventosfaculdade/src/controllers/InscreverEventoController.php">
-                            <input type="hidden" name="evento_id" value="<?php echo $evento['EventoId']; ?>">
-                            <button type="submit">Inscrever-se</button>
-                        </form>
-                    </li>
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            <?php if (!empty($evento['ImagemEvento'])): ?>
+                                <img src="<?php echo htmlspecialchars($evento['ImagemEvento']); ?>" class="card-img-top" alt="Imagem do Evento">
+                            <?php else: ?>
+                                <img src="/Eventosfaculdade/public/images/default-evento.jpg" class="card-img-top" alt="Imagem Padrão">
+                            <?php endif; ?>
+                            <div class="card-body">
+                                <h5 class="card-title"><?php echo htmlspecialchars($evento['NomeEvento']); ?></h5>
+                                <p class="card-text"><strong>Departamento:</strong> <?php echo htmlspecialchars($evento['NomeDepartamento']); ?></p>
+                                <p class="card-text"><strong>Data:</strong> <?php echo formatarData($evento['DataInicioEvento']); ?> a <?php echo formatarData($evento['DataFimEvento']); ?></p>
+                                <p class="card-text"><strong>Vagas Disponíveis:</strong> <?php echo htmlspecialchars($evento['VagasDisponiveis']); ?></p>
+                                <form method="POST" action="/Eventosfaculdade/src/controllers/InscreverEventoController.php">
+                                    <input type="hidden" name="evento_id" value="<?php echo $evento['EventoId']; ?>">
+                                    <button class="btn btn-primary w-100">Inscrever-se</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <p>Nenhum evento disponível para inscrição.</p>
+                <p class="text-center">Nenhum evento disponível para inscrição.</p>
             <?php endif; ?>
-        </ul>
+        </div>
     </main>
 
-    <footer>
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
         <p>&copy; <?php echo date('Y'); ?> Sistema de Eventos Acadêmicos</p>
     </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

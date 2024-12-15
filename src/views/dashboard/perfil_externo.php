@@ -8,68 +8,25 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'Externo') {
     exit;
 }
 
+// Obtém o ID do aluno da sessão
 $alunoId = $_SESSION['user_id'] ?? null;
-$mensagemSucesso = "";
-$mensagemErro = "";
 
-// Processa atualização de dados ou exclusão de perfil
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['nova_senha']) && isset($_POST['confirma_senha'])) {
-        $novaSenha = $_POST['nova_senha'];
-        $confirmaSenha = $_POST['confirma_senha'];
-
-        if ($novaSenha === $confirmaSenha) {
-            $senhaHash = password_hash($novaSenha, PASSWORD_DEFAULT);
-
-            $sqlAtualizaSenha = "UPDATE participantes SET SenhaParticipante = :senha WHERE ParticipanteId = :id";
-            $stmtAtualizaSenha = $pdo->prepare($sqlAtualizaSenha);
-            $stmtAtualizaSenha->execute([':senha' => $senhaHash, ':id' => $alunoId]);
-
-            $mensagemSucesso = "Senha atualizada com sucesso!";
-        } else {
-            $mensagemErro = "As senhas não correspondem.";
-        }
-    } elseif (isset($_POST['nome']) && isset($_POST['cpf']) && isset($_POST['email'])) {
-        $novoNome = $_POST['nome'];
-        $novoCPF = $_POST['cpf'];
-        $novoEmail = $_POST['email'];
-
-        if (preg_match('/^\d{11}$/', $novoCPF)) {
-            $sqlAtualizaDados = "UPDATE participantes SET NomeParticipante = :nome, CPF = :cpf, EmailParticipante = :email WHERE ParticipanteId = :id";
-            $stmtAtualizaDados = $pdo->prepare($sqlAtualizaDados);
-            $stmtAtualizaDados->execute([
-                ':nome' => $novoNome,
-                ':cpf' => $novoCPF,
-                ':email' => $novoEmail,
-                ':id' => $alunoId
-            ]);
-
-            $mensagemSucesso = "Dados atualizados com sucesso!";
-        } else {
-            $mensagemErro = "O CPF deve conter exatamente 11 números.";
-        }
-    } elseif (isset($_POST['delete_profile'])) {
-        // Exclui o perfil do aluno externo
-        $sqlDeletaPerfil = "DELETE FROM participantes WHERE ParticipanteId = :id";
-        $stmtDeletaPerfil = $pdo->prepare($sqlDeletaPerfil);
-        $stmtDeletaPerfil->execute([':id' => $alunoId]);
-
-        session_destroy();
-        header("Location: /Eventosfaculdade/src/views/usuarios/login.php");
-        exit;
-    }
+// Garante que o ID do aluno está definido
+if (!$alunoId) {
+    echo "<p>Erro: usuário não autenticado. Faça login novamente.</p>";
+    exit;
 }
 
-// Buscar informações do aluno
+// Buscar informações do aluno no banco de dados
 $sqlAluno = "SELECT NomeParticipante, CPF, EmailParticipante FROM participantes WHERE ParticipanteId = :aluno_id";
 $stmtAluno = $pdo->prepare($sqlAluno);
 $stmtAluno->execute([':aluno_id' => $alunoId]);
 $aluno = $stmtAluno->fetch(PDO::FETCH_ASSOC);
 
-if (!$aluno) {
-    echo "Usuário não encontrado.";
-    exit;
-}
+// Inicializa as variáveis com valores padrão
+$nome = htmlspecialchars($aluno['NomeParticipante'] ?? '');
+$cpf = htmlspecialchars($aluno['CPF'] ?? '');
+$email = htmlspecialchars($aluno['EmailParticipante'] ?? '');
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -77,61 +34,97 @@ if (!$aluno) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Perfil</title>
-    <link rel="stylesheet" href="/Eventosfaculdade/public/css/style.css">
+    <link rel="stylesheet" href="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/css/bootstrap.min.css">
 </head>
-<body>
-    <header>
-        <h1>Bem-vindo, <?php echo htmlspecialchars($aluno['NomeParticipante'] ?? 'Usuário'); ?>!</h1>
-        <nav>
-            <ul>
-                <li><a href="/Eventosfaculdade/src/views/dashboard/externo.php">Dashboard</a></li>
-                <li><a href="/Eventosfaculdade/src/controllers/LogoutController.php">Sair</a></li>
-            </ul>
+<body class="bg-light">
+    <!-- Header -->
+    <header class="bg-secondary text-white text-center py-3">
+        <h1>Bem-vindo, <?php echo $nome; ?>!</h1>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="/Eventosfaculdade/src/views/dashboard/externo.php">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/Eventosfaculdade/src/controllers/LogoutController.php">Sair</a></li>
+                    </ul>
+                </div>
+            </div>
         </nav>
     </header>
 
-    <main>
-        <!-- Mensagem de sucesso ou erro -->
-        <?php if (!empty($mensagemSucesso)): ?>
-            <p style="color: green;"> <?php echo $mensagemSucesso; ?> </p>
-        <?php endif; ?>
-        <?php if (!empty($mensagemErro)): ?>
-            <p style="color: red;"> <?php echo $mensagemErro; ?> </p>
-        <?php endif; ?>
+    <!-- Conteúdo Principal -->
+    <main class="container mt-5">
+        <!-- Atualizar Informações -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-6">
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h2 class="card-title text-center text-primary mb-4">Atualizar Informações</h2>
+                        <form method="POST" action="">
+                            <div class="mb-3">
+                                <label for="nome" class="form-label">Nome</label>
+                                <input type="text" id="nome" name="nome" class="form-control" value="<?php echo $nome; ?>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="cpf" class="form-label">CPF (somente números)</label>
+                                <input type="text" id="cpf" name="cpf" class="form-control" maxlength="11" value="<?php echo $cpf; ?>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">E-mail</label>
+                                <input type="email" id="email" name="email" class="form-control" value="<?php echo $email; ?>" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Atualizar Dados</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <h2>Atualizar Informações</h2>
-        <form method="POST" action="">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" value="<?php echo htmlspecialchars($aluno['NomeParticipante']); ?>" required>
-            <br>
-            <label for="cpf">CPF (somente números):</label>
-            <input type="text" id="cpf" name="cpf" maxlength="11" value="<?php echo htmlspecialchars($aluno['CPF']); ?>" required>
-            <br>
-            <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($aluno['EmailParticipante']); ?>" required>
-            <br>
-            <button type="submit">Atualizar Dados</button>
-        </form>
+        <!-- Atualizar Senha -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-6">
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h2 class="card-title text-center text-primary mb-4">Atualizar Senha</h2>
+                        <form method="POST" action="">
+                            <div class="mb-3">
+                                <label for="nova_senha" class="form-label">Nova Senha</label>
+                                <input type="password" id="nova_senha" name="nova_senha" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirma_senha" class="form-label">Confirmar Nova Senha</label>
+                                <input type="password" id="confirma_senha" name="confirma_senha" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Atualizar Senha</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <h2>Atualizar Senha</h2>
-        <form method="POST" action="">
-            <label for="nova_senha">Nova Senha:</label>
-            <input type="password" id="nova_senha" name="nova_senha">
-            <br>
-            <label for="confirma_senha">Confirmar Nova Senha:</label>
-            <input type="password" id="confirma_senha" name="confirma_senha">
-            <br>
-            <button type="submit">Atualizar Senha</button>
-        </form>
-
-        <h2>Excluir Perfil</h2>
-        <form method="POST" action="" onsubmit="return confirm('Tem certeza que deseja excluir sua conta? Esta ação é irreversível.');">
-            <button type="submit" name="delete_profile" style="color: red;">Excluir Perfil</button>
-        </form>
+        <!-- Excluir Perfil -->
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h2 class="card-title text-center text-danger mb-4">Excluir Perfil</h2>
+                        <form method="POST" action="" onsubmit="return confirm('Tem certeza que deseja excluir sua conta? Esta ação é irreversível.');">
+                            <button type="submit" name="delete_profile" class="btn btn-danger w-100">Excluir Perfil</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <footer>
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3 mt-5">
         <p>&copy; <?php echo date('Y'); ?> Sistema de Eventos Acadêmicos</p>
     </footer>
+
+    <script src="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
