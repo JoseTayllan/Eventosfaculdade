@@ -40,7 +40,7 @@ try {
     </header>
 
     <!-- Conteúdo Principal -->
-    <div class="container mt-5">
+    <div class="container mt-5" style="padding-bottom: 80px;">
         <div class="row">
             <div class="col-md-12">
                 <?php if (!empty($eventos)): ?>

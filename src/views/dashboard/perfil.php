@@ -118,7 +118,7 @@ if (!$aluno) {
 
 
     <!-- Conteúdo Principal -->
-    <main class="container-lg mt-5">
+    <main class="container mt-5" style="padding-bottom: 80px;">
         <!-- Mensagem de Sucesso ou Erro -->
         <?php if (!empty($mensagemSucesso)): ?>
             <div class="alert alert-success text-center"><?php echo $mensagemSucesso; ?></div>

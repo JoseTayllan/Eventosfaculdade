@@ -90,7 +90,7 @@ function formatarData($data) {
     <?php endif; ?>
 
     <!-- Conteúdo Principal -->
-    <main class="container-lg mt-5">
+    <main class="container mt-5" style="padding-bottom: 80px;">
         <h2 class="text-center mb-4">Eventos Disponíveis</h2>
         <div class="row">
             <?php if (!empty($eventos)): ?>

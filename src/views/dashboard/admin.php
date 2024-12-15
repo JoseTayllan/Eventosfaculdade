@@ -35,7 +35,7 @@ $_SESSION['LAST_ACTIVITY'] = time();
     </header>
 
     <!-- Conteúdo Principal -->
-    <div class="container mt-5">
+    <div class="container mt-5" style="padding-bottom: 80px;">
         <h2 class="text-center mb-4">Bem-vindo, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!</h2>
 
         <!-- Exibição de mensagens de feedback -->

@@ -71,7 +71,7 @@ $email = htmlspecialchars($aluno['EmailParticipante'] ?? '');
     </header>
 
     <!-- Conteúdo Principal -->
-    <main class="container mt-5">
+    <main class="container mt-5" style="padding-bottom: 80px;">
         <!-- Atualizar Informações -->
         <div class="row justify-content-center mb-4">
             <div class="col-md-6">

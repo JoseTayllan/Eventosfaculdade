@@ -63,7 +63,7 @@ try {
     </header>
 
     <!-- Conteúdo Principal -->
-    <div class="container mt-5">
+    <div class="container mt-5" style="padding-bottom: 80px;">
         <form method="POST" action="/Eventosfaculdade/src/controllers/EditarEventoController.php" enctype="multipart/form-data">
             <input type="hidden" name="evento_id" value="<?php echo htmlspecialchars($evento['EventoId']); ?>">
 

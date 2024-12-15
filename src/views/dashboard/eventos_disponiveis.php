@@ -51,7 +51,7 @@ function formatarData($data) {
     </header>
 
     <!-- Conteúdo Principal -->
-    <main class="container mt-5">
+    <main class="container mt-5" style="padding-bottom: 80px;">
         <!-- Mensagem de Feedback -->
         <?php if (isset($_GET['status'])): ?>
             <div class="alert <?php echo $_GET['status'] === 'success' ? 'alert-success' : 'alert-danger'; ?> text-center">
@@ -107,8 +107,8 @@ function formatarData($data) {
     </main>
 
     <!-- Footer -->
-    <footer class="bg-secondary text-white text-center py-3">
-        <p>&copy; <?php echo date('Y'); ?> Sistema de Eventos Acadêmicos</p>
-    </footer>
+    <footer class="bg-secondary text-white text-center py-3 mt-5 fixed-bottom">
+    <p class="m-0">&copy; 2024 Sistema de Eventos</p>
+</footer>
 </body>
 </html>

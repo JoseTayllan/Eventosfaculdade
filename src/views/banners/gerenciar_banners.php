@@ -32,7 +32,7 @@ try {
     <h1 class="m-0 text-center w-100">Gerenciar Banners</h1>
 </header>
 
-    <div class="container mt-5">
+<div class="container mt-5" style="padding-bottom: 80px;">
         <h2 class="mb-4">Banners Cadastrados</h2>
         <table class="table table-bordered">
             <thead class="table-dark">

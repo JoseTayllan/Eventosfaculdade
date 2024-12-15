@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </header>
 
     <!-- Conteúdo Principal -->
-    <div class="container mt-5">
+    <div class="container mt-5" style="padding-bottom: 80px;">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <!-- Card do Formulário -->
