@@ -52,6 +52,7 @@ function formatarData($data) {
         <h1>Bem-vindo, <?php echo htmlspecialchars($_SESSION['user_name'] ?? 'Usuário'); ?>!</h1>
         <nav>
             <ul>
+                <li><a href="/Eventosfaculdade/src/views/dashboard/perfil.php">Meu Perfil</a></li>
                 <li><a href="/Eventosfaculdade/src/controllers/LogoutController.php">Sair</a></li>
             </ul>
         </nav>

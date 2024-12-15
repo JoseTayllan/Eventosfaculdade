@@ -2,7 +2,7 @@
 session_start();
 require_once '../../../config/database.php';
 
-// Verifica se o aluno interno está logado
+// Verifica se o aluno externo está logado
 if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'Externo') {
     header("Location: /Eventosfaculdade/src/views/usuarios/login.php");
     exit;
@@ -44,7 +44,7 @@ function formatarData($data) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard do Aluno Interno</title>
+    <title>Dashboard do Aluno Externo</title>
     <link rel="stylesheet" href="/Eventosfaculdade/public/css/style.css">
 </head>
 <body>
@@ -52,6 +52,7 @@ function formatarData($data) {
         <h1>Bem-vindo, <?php echo htmlspecialchars($_SESSION['user_name'] ?? 'Usuário'); ?>!</h1>
         <nav>
             <ul>
+                <li><a href="/Eventosfaculdade/src/views/dashboard/perfil_externo.php">Meu Perfil</a></li>
                 <li><a href="/Eventosfaculdade/src/controllers/LogoutController.php">Sair</a></li>
             </ul>
         </nav>
