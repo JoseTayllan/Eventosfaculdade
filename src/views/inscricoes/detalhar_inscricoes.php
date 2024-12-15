@@ -42,8 +42,9 @@ try {
 </head>
 <body>
     <!-- Header -->
-    <header class="bg-secondary text-white text-center py-3">
-        <h1>Detalhes das Inscrições</h1>
+    <header class="bg-secondary text-white py-3 d-flex align-items-center">
+        <img src="/Eventosfaculdade/public/uploads/Logo_FPM.png" alt="Logo" style="height: 70px;" class="ms-3">
+        <h1 class="m-0 text-center w-100">Detalhes das Inscrições</h1>
     </header>
 
     <!-- Conteúdo Principal -->
@@ -98,9 +99,9 @@ try {
     </div>
 
     <!-- Footer -->
-    <footer class="bg-secondary text-white text-center py-3 mt-5">
-        <p class="m-0">&copy; 2024 Sistema de Eventos</p>
-    </footer>
+    <footer class="bg-secondary text-white text-center py-3 mt-5 fixed-bottom">
+    <p class="m-0">&copy; 2024 Sistema de Eventos</p>
+</footer>
 
     <!-- Bootstrap JS -->
     <script src="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>

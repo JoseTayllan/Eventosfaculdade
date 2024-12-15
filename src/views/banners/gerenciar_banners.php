@@ -26,9 +26,11 @@ try {
     <link rel="stylesheet" href="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/css/bootstrap.min.css">
 </head>
 <body>
-    <header class="bg-secondary text-white text-center py-3">
-        <h1>Gerenciar Banners</h1>
-    </header>
+
+<header class="bg-secondary text-white py-3 d-flex align-items-center">
+    <img src="/Eventosfaculdade/public/uploads/Logo_FPM.png" alt="Logo" style="height: 70px;" class="ms-3">
+    <h1 class="m-0 text-center w-100">Gerenciar Banners</h1>
+</header>
 
     <div class="container mt-5">
         <h2 class="mb-4">Banners Cadastrados</h2>
@@ -78,8 +80,8 @@ try {
         </form>
     </div>
 
-    <footer class="bg-dark text-white text-center py-3 mt-5">
-        <p>&copy; <?php echo date('Y'); ?> Sistema de Eventos</p>
-    </footer>
+    <footer class="bg-secondary text-white text-center py-3 mt-5 fixed-bottom">
+    <p class="m-0">&copy; 2024 Sistema de Eventos</p>
+</footer>
 </body>
 </html>

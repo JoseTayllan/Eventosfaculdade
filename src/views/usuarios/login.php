@@ -50,9 +50,9 @@
     </div>
     
     <!-- Footer -->
-    <footer class="bg-secondary text-white text-center py-3 mt-5">
-        <p class="m-0">&copy; 2024 Sistema de Eventos</p>
-    </footer>
+    <footer class="bg-secondary text-white text-center py-3 mt-5 fixed-bottom">
+    <p class="m-0">&copy; 2024 Sistema de Eventos</p>
+</footer>
     
     <!-- Bootstrap JS -->
     <script src="../../../public/stile/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
