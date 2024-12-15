@@ -20,6 +20,19 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
+                <!-- Mensagens de Feedback -->
+                <?php if (isset($_GET['status'])): ?>
+                    <div class="alert <?php echo ($_GET['status'] === 'login_failed') ? 'alert-danger' : 'alert-success'; ?> text-center">
+                        <?php
+                        if ($_GET['status'] === 'login_failed') {
+                            echo "Erro: E-mail ou senha inválidos.";
+                        } elseif ($_GET['status'] === 'logout_success') {
+                            echo "Você saiu do sistema com sucesso.";
+                        }
+                        ?>
+                    </div>
+                <?php endif; ?>
+
                 <!-- Card do Formulário -->
                 <div class="card shadow-lg">
                     <div class="card-body">
@@ -57,8 +70,8 @@
 
     <!-- Footer -->
     <footer class="bg-secondary text-white text-center py-3 mt-5 fixed-bottom">
-    <p class="m-0">&copy; 2024 Sistema de Eventos</p>
-</footer>
+        <p class="m-0">&copy; 2024 Sistema de Eventos</p>
+    </footer>
 
     <!-- Bootstrap JS -->
     <script src="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>

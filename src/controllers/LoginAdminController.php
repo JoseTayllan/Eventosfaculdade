@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $senha = $_POST['senha'];
 
     try {
+        // Consulta para verificar o administrador
         $sql = "SELECT * FROM Participantes WHERE EmailParticipante = :email AND TipoParticipante = 'Admin'";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([':email' => $email]);
@@ -20,10 +21,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: /Eventosfaculdade/src/views/dashboard/admin.php");
             exit;
         } else {
-            echo "Credenciais inválidas!";
+            // Credenciais inválidas
+            header("Location: /Eventosfaculdade/src/views/admin/login.php?status=login_failed");
+            exit;
         }
     } catch (PDOException $e) {
-        die("Erro ao processar login: " . $e->getMessage());
+        // Erro no banco de dados
+        header("Location: /Eventosfaculdade/src/views/admin/login.php?status=db_error");
+        exit;
     }
 }
+
+// Redireciona caso o método não seja POST
+header("Location: /Eventosfaculdade/src/views/admin/login.php");
+exit;
 ?>
