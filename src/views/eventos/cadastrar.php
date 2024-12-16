@@ -134,7 +134,7 @@ try {
 
                             <!-- Botão de Cadastro -->
                             <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">Cadastrar Evento</button>
+                                <button type="submit" class="btn custom-ocean">Cadastrar Evento</button>
                             </div>
                         </form>
                     </div>

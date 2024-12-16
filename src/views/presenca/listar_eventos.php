@@ -76,7 +76,7 @@ try {
                         </select>
                     </div>
                     <div class="col-md-4 d-grid align-items-end">
-                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                        <button type="submit" class="btn custom-ocean">Filtrar</button>
                     </div>
                 </form>
 

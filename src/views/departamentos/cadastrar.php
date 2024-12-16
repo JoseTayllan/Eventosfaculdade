@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <input type="text" name="nome_departamento" id="nome_departamento" class="form-control" placeholder="Digite o nome do departamento" required>
                             </div>
                             <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                                <button type="submit" class="btn custom-ocean">Cadastrar</button>
                             </div>
                         </form>
                     </div>

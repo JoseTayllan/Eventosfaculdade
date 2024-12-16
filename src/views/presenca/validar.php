@@ -71,7 +71,7 @@ $inscritos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <!-- Botão para Salvar Presenças -->
             <?php if (!empty($inscritos)): ?>
                 <div class="text-center mt-4">
-                    <button type="submit" class="btn btn-primary">Salvar Presenças</button>
+                    <button type="submit" class="btn custom-ocean">Salvar Presenças</button>
                 </div>
             <?php endif; ?>
         </form>

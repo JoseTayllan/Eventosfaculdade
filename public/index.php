@@ -21,6 +21,7 @@ function formatarData($data) {
 <!DOCTYPE html>
 <html lang="pt-BR">
 <link rel="stylesheet" href="/Eventosfaculdade/public/stile/stile.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
 <head>
     <meta charset="UTF-8">
@@ -129,9 +130,41 @@ function formatarData($data) {
     </main>
 
     <!-- Footer -->
-    <footer class="custom-ocean text-white text-center py-3 mt-5">
-    <p>&copy; <?php echo date('Y'); ?> Sistema de Eventos Acadêmicos</p>
-</footer>
+    <footer class="custom-ocean text-white py-4 mt-5">
+    <div class="container">
+        <div class="row">
+            <!-- Coluna Esquerda: Informações -->
+            <div class="col-md-6 text-start">
+                <p><i class="bi bi-geo-alt-fill"></i> Faculdade da Polícia Militar - Campus São Nicolau</p>
+                <p><i class="bi bi-geo-alt"></i> Rua 10, nº 923 - Setor Oeste, Goiânia - Goiás</p>
+                <p><i class="bi bi-mailbox"></i> CEP: 74120-020</p>
+                <p><i class="bi bi-telephone-fill"></i> Telefone: (62) 3286-5895</p>
+                <p><i class="bi bi-whatsapp"></i> WhatsApp: 
+                    <a href="https://wa.me/5562999908377" class="text-white text-decoration-none" target="_blank">
+                        (62) 9 9990-8377
+                    </a>
+                </p>
+                <p><i class="bi bi-clock-fill"></i> Horário de atendimento: das 8h às 20h</p>
+            </div>
+
+            <!-- Coluna Direita: Redes Sociais -->
+            <div class="col-md-6 text-center">
+                <h5>Siga-nos</h5>
+                <a href="https://facebook.com" target="_blank" class="text-white me-3 fs-3"><i class="bi bi-facebook"></i></a>
+                <a href="https://instagram.com" target="_blank" class="text-white me-3 fs-3"><i class="bi bi-instagram"></i></a>
+                <a href="https://linkedin.com" target="_blank" class="text-white me-3 fs-3"><i class="bi bi-linkedin"></i></a>
+                <a href="https://twitter.com" target="_blank" class="text-white fs-3"><i class="bi bi-twitter"></i></a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center mt-4">
+                <p>&copy; <?php echo date('Y'); ?> Sistema de Eventos Acadêmicos</p>
+            </div>
+        </div>
+    </div>
+    </footer>
+
+
 
 
     <!-- Bootstrap JS -->

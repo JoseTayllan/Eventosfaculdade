@@ -77,7 +77,7 @@ try {
                 <label for="titulo" class="form-label">Título:</label>
                 <input type="text" name="titulo" id="titulo" class="form-control">
             </div>
-            <button type="submit" class="btn btn-primary">Adicionar Banner</button>
+            <button type="submit" class="btn custom-ocean">Adicionar Banner</button>
         </form>
     </div>
 
