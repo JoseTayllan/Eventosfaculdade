@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($novaSenha === $confirmaSenha) {
             $senhaHash = password_hash($novaSenha, PASSWORD_DEFAULT);
 
-            $sqlAtualizaSenha = "UPDATE participantes SET SenhaParticipante = :senha WHERE ParticipanteId = :id";
+            $sqlAtualizaSenha = "UPDATE Participantes SET SenhaParticipante = :senha WHERE ParticipanteId = :id";
             $stmtAtualizaSenha = $pdo->prepare($sqlAtualizaSenha);
             $stmtAtualizaSenha->execute([':senha' => $senhaHash, ':id' => $alunoId]);
 
@@ -35,24 +35,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $mensagemErro = "As senhas não correspondem.";
         }
-    } elseif (isset($_POST['nome']) && isset($_POST['matricula']) && isset($_POST['email'])) {
+    } elseif (isset($_POST['nome']) && isset($_POST['matricula']) && isset($_POST['email']) && isset($_POST['telefone'])) {
         $novoNome = $_POST['nome'];
         $novaMatricula = $_POST['matricula'];
         $novoEmail = $_POST['email'];
-
-        $sqlAtualizaDados = "UPDATE participantes SET NomeParticipante = :nome, NumeroMatricula = :matricula, EmailParticipante = :email WHERE ParticipanteId = :id";
+        $novoTelefone = $_POST['telefone'];
+    
+        $sqlAtualizaDados = "UPDATE Participantes SET NomeParticipante = :nome, NumeroMatricula = :matricula, EmailParticipante = :email, TelefoneParticipante = :telefone WHERE ParticipanteId = :id";
         $stmtAtualizaDados = $pdo->prepare($sqlAtualizaDados);
         $stmtAtualizaDados->execute([
             ':nome' => $novoNome,
             ':matricula' => $novaMatricula,
             ':email' => $novoEmail,
+            ':telefone' => $novoTelefone,
             ':id' => $alunoId
         ]);
-
+    
         $mensagemSucesso = "Dados atualizados com sucesso!";
-    } elseif (isset($_POST['delete_profile'])) {
+    }
+     elseif (isset($_POST['delete_profile'])) {
         // Exclui o perfil do aluno interno
-        $sqlDeletaPerfil = "DELETE FROM participantes WHERE ParticipanteId = :id";
+        $sqlDeletaPerfil = "DELETE FROM Participantes WHERE ParticipanteId = :id";
         $stmtDeletaPerfil = $pdo->prepare($sqlDeletaPerfil);
         $stmtDeletaPerfil->execute([':id' => $alunoId]);
 
@@ -63,10 +66,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Buscar informações do aluno
-$sqlAluno = "SELECT NomeParticipante, NumeroMatricula, EmailParticipante FROM participantes WHERE ParticipanteId = :aluno_id";
+$sqlAluno = "SELECT NomeParticipante, NumeroMatricula, EmailParticipante, TelefoneParticipante FROM Participantes WHERE ParticipanteId = :aluno_id";
 $stmtAluno = $pdo->prepare($sqlAluno);
 $stmtAluno->execute([':aluno_id' => $alunoId]);
 $aluno = $stmtAluno->fetch(PDO::FETCH_ASSOC);
+
 
 if (!$aluno) {
     echo "<p>Usuário não encontrado. Faça login novamente.</p>";
@@ -82,6 +86,7 @@ if (!$aluno) {
     <title>Meu Perfil</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+        <link rel="icon" type="image/x-icon" href="/Eventosfaculdade/public/uploads/fpm.ico">
 </head>
 <body class="bg-light">
     <!-- Header -->
@@ -146,6 +151,11 @@ if (!$aluno) {
                                 <label for="email" class="form-label">E-mail</label>
                                 <input type="email" id="email" name="email" class="form-control" value="<?php echo htmlspecialchars($aluno['EmailParticipante']); ?>" required>
                             </div>
+                            <div class="mb-3">
+                                <label for="telefone" class="form-label">Telefone</label>
+                                <input type="text" id="telefone" name="telefone" class="form-control" value="<?php echo htmlspecialchars($aluno['TelefoneParticipante'] ?? ''); ?>" required>
+                            </div>
+
                             <button type="submit" class="btn custom-ocean w-100">Atualizar Dados</button>
                         </form>
                     </div>

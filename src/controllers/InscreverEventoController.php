@@ -60,12 +60,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['evento_id'])) {
         }
 
         // Verifica se o aluno já está inscrito
-        $stmt = $pdo->prepare("SELECT * FROM Inscricoes WHERE EventoId = ? AND ParticipanteId = ?");
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM Inscricoes WHERE EventoId = ? AND ParticipanteId = ?");
         $stmt->execute([$eventoId, $alunoId]);
-        $inscricao = $stmt->fetch(PDO::FETCH_ASSOC);
+        $jaInscrito = $stmt->fetchColumn() > 0;
 
-        if ($inscricao) {
-            echo "Você já está inscrito neste evento.";
+        if ($jaInscrito) {
+            header("Location: /Eventosfaculdade/src/views/dashboard/eventos_disponiveis.php?status=already_registered");
             exit;
         }
 

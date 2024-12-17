@@ -31,6 +31,7 @@ function formatarData($data) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard do Aluno</title>
     <link rel="stylesheet" href="/Eventosfaculdade/public/css/style.css">
+        <link rel="icon" type="image/x-icon" href="/Eventosfaculdade/public/uploads/fpm.ico">
 </head>
 <body>
     <header>

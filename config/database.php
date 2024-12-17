@@ -3,9 +3,9 @@
 define('BASE_PATH', __DIR__ . '/../..');
 
 $host = 'localhost';
-$dbname = 'EventosAcademicos';
-$username = 'root';
-$password = '';
+$dbname = 'u413819793_eventofpm';
+$username = 'u413819793_fpm';
+$password = 'g8R?Q7a!';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);

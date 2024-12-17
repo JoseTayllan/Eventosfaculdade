@@ -80,6 +80,7 @@ try {
     <link rel="stylesheet" href="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/css/bootstrap.min.css">
     <!-- CSS Customizado -->
     <link rel="stylesheet" href="/Eventosfaculdade/public/css/style.css">
+        <link rel="icon" type="image/x-icon" href="/Eventosfaculdade/public/uploads/fpm.ico">
 </head>
 <body>
     <!-- Header -->
@@ -129,34 +130,36 @@ try {
 
                 <!-- Tabela de Inscrições -->
                 <?php if (!empty($inscricoes)): ?>
-                    <table class="table table-striped table-bordered">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>Evento</th>
-                                <th>Participante</th>
-                                <th>Email</th>
-                                <th>Tipo</th>
-                                <th>Departamento</th>
-                                <th>Compareceu</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($inscricoes as $inscricao): ?>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead class="table-dark">
                                 <tr>
-                                    <td><?php echo htmlspecialchars($inscricao['NomeEvento']); ?></td>
-                                    <td><?php echo htmlspecialchars($inscricao['NomeParticipante']); ?></td>
-                                    <td><?php echo htmlspecialchars($inscricao['EmailParticipante']); ?></td>
-                                    <td><?php echo htmlspecialchars($inscricao['TipoParticipante']); ?></td>
-                                    <td><?php echo htmlspecialchars($inscricao['NomeDepartamento']); ?></td>
-                                    <td>
-                                        <?php echo ($inscricao['Compareceu'] === null) 
-                                            ? "<span class='text-muted'>Não registrado</span>" 
-                                            : ($inscricao['Compareceu'] ? "<span class='text-success'>Sim</span>" : "<span class='text-danger'>Não</span>"); ?>
-                                    </td>
+                                    <th>Evento</th>
+                                    <th>Participante</th>
+                                    <th>Email</th>
+                                    <th>Tipo</th>
+                                    <th>Departamento</th>
+                                    <th>Compareceu</th>
                                 </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($inscricoes as $inscricao): ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($inscricao['NomeEvento']); ?></td>
+                                        <td><?php echo htmlspecialchars($inscricao['NomeParticipante']); ?></td>
+                                        <td><?php echo htmlspecialchars($inscricao['EmailParticipante']); ?></td>
+                                        <td><?php echo htmlspecialchars($inscricao['TipoParticipante']); ?></td>
+                                        <td><?php echo htmlspecialchars($inscricao['NomeDepartamento']); ?></td>
+                                        <td>
+                                            <?php echo ($inscricao['Compareceu'] === null) 
+                                                ? "<span class='text-muted'>Não registrado</span>" 
+                                                : ($inscricao['Compareceu'] ? "<span class='text-success'>Sim</span>" : "<span class='text-danger'>Não</span>"); ?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 <?php else: ?>
                     <div class="alert alert-warning text-center">
                         Nenhuma inscrição encontrada.

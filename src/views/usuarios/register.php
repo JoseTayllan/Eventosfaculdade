@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <link rel="stylesheet" href="/Eventosfaculdade/public/stile/stile.css">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,12 +10,14 @@
     <link rel="stylesheet" href="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/css/bootstrap.min.css">
     <!-- CSS Customizado -->
     <link rel="stylesheet" href="/Eventosfaculdade/public/css/style.css">
+    <link rel="icon" type="image/x-icon" href="/Eventosfaculdade/public/uploads/fpm.ico">
 </head>
+
 <body>
     <!-- Header -->
     <header class="custom-ocean text-white py-3 d-flex align-items-center">
-    <img src="/Eventosfaculdade/public/uploads/Logo_FPM.png" alt="Logo" style="height: 70px;" class="ms-3">
-    <h1 class="m-0 text-center w-100">Registro de Usuário</h1>
+        <img src="/Eventosfaculdade/public/uploads/Logo_FPM.png" alt="Logo" style="height: 70px;" class="ms-3">
+        <h1 class="m-0 text-center w-100">Registro de Usuário</h1>
     </header>
 
     <!-- Conteúdo Principal -->
@@ -37,6 +40,15 @@
                             <label for="email" class="form-label">E-mail</label>
                             <input type="email" name="email" id="email" class="form-control" placeholder="Digite seu e-mail" required>
                         </div>
+                        <!-- Telefone -->
+                        <div class="mb-3">
+                            <label for="telefone" class="form-label">Telefone</label>
+                            <input type="tel" name="telefone" id="telefone" class="form-control"
+                                placeholder="Ex: (62) 99628-0333"
+                                pattern="^\(\d{2}\)\s\d{4,5}-\d{4}$"
+                                title="Formato esperado: (XX) XXXXX-XXXX" required>
+                        </div>
+
 
                         <!-- Tipo de Usuário -->
                         <div class="mb-3">
@@ -76,11 +88,22 @@
 
     <!-- Footer -->
     <footer class="custom-ocean text-white text-center py-3 mt-5 fixed-bottom">
-    <p class="m-0">&copy; 2024 Sistema de Eventos</p>
-</footer>
+        <p class="m-0">&copy; 2024 Sistema de Eventos</p>
+    </footer>
 
     <!-- Bootstrap JS -->
     <script src="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('telefone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 10) {
+                e.target.value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
+            } else {
+                e.target.value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+            }
+        });
+    </script>
+
     <!-- Script Dinâmico -->
     <script>
         const tipoSelect = document.getElementById('tipo');
@@ -101,4 +124,7 @@
         });
     </script>
 </body>
+
 </html>
+
+

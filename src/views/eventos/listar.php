@@ -39,6 +39,7 @@ function formatarData($data) {
     <link rel="stylesheet" href="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/css/bootstrap.min.css">
     <!-- CSS Customizado -->
     <link rel="stylesheet" href="/Eventosfaculdade/public/css/style.css">
+     <link rel="icon" type="image/x-icon" href="/Eventosfaculdade/public/uploads/fpm.ico">
 </head>
 <body>
     <!-- Header -->
@@ -50,52 +51,57 @@ function formatarData($data) {
     <!-- Conteúdo Principal -->
     <div class="container mt-5" style="padding-bottom: 80px;">
         <?php if (!empty($eventos)): ?>
-            <table class="table table-striped table-bordered">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Imagem</th>
-                        <th>Nome do Evento</th>
-                        <th>Data</th>
-                        <th>Horário</th>
-                        <th>Local</th>
-                        <th>Departamento</th>
-                        <th>Palestrante</th>
-                        <th>Carga Horária</th>
-                        <th>Descrição</th>
-                        <th>Vagas</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($eventos as $evento): ?>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead class="table-dark">
                         <tr>
-                            <td>
-                                <?php if (!empty($evento['ImagemEvento'])): ?>
-                                    <img src="<?php echo htmlspecialchars($evento['ImagemEvento'] ?? ''); ?>" alt="Imagem do Evento" class="img-thumbnail" style="width: 100px; height: auto;">
-                                <?php else: ?>
-                                    <span class="text-muted">Sem imagem</span>
-                                <?php endif; ?>
-                            </td>
-                            <td><?php echo htmlspecialchars($evento['NomeEvento'] ?? ''); ?></td>
-                            <td><?php echo formatarData($evento['DataInicioEvento']) . ' a ' . formatarData($evento['DataFimEvento']); ?></td>
-                            <td><?php echo htmlspecialchars($evento['HorarioInicio'] ?? '') . ' - ' . htmlspecialchars($evento['HorarioTermino'] ?? ''); ?></td>
-                            <td><?php echo htmlspecialchars($evento['LocalEvento'] ?? ''); ?></td>
-                            <td><?php echo htmlspecialchars($evento['NomeDepartamento'] ?? ''); ?></td>
-                            <td><?php echo htmlspecialchars($evento['Palestrante'] ?? 'Não informado'); ?></td>
-                            <td><?php echo htmlspecialchars($evento['CargaHoraria'] ?? '') . ' horas'; ?></td>
-                            <td><?php echo htmlspecialchars($evento['DescricaoEvento'] ?? ''); ?></td>
-                            <td><?php echo htmlspecialchars($evento['VagasDisponiveis'] ?? ''); ?></td>
-                            <td>
-                                <a href="/Eventosfaculdade/src/views/eventos/editar.php?evento_id=<?php echo $evento['EventoId']; ?>" class="btn btn-warning btn-sm mb-1">Editar</a>
-                                <form method="POST" action="/Eventosfaculdade/src/controllers/ExcluirEventoController.php" style="display:inline;">
-                                    <input type="hidden" name="evento_id" value="<?php echo $evento['EventoId']; ?>">
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este evento?')">Excluir</button>
-                                </form>
-                            </td>
+                            <th>Imagem</th>
+                            <th>Nome do Evento</th>
+                            <th>Data</th>
+                            <th>Horário</th>
+                            <th>Local</th>
+                            <th>Departamento</th>
+                            <th>Palestrante</th>
+                            <th>Carga Horária</th>
+                            <th>Descrição</th>
+                            <th>Vagas</th>
+                            <th>Ações</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($eventos as $evento): ?>
+                            <tr>
+                                <td>
+                                    <?php if (!empty($evento['ImagemEvento'])): ?>
+                                        <img src="<?php echo htmlspecialchars($evento['ImagemEvento'] ?? ''); ?>" alt="Imagem do Evento" class="img-thumbnail" style="width: 100px; height: auto;">
+                                    <?php else: ?>
+                                        <span class="text-muted">Sem imagem</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td><?php echo htmlspecialchars($evento['NomeEvento'] ?? ''); ?></td>
+                                <td><?php echo formatarData($evento['DataInicioEvento']) . ' a ' . formatarData($evento['DataFimEvento']); ?></td>
+                                <td><?php echo htmlspecialchars($evento['HorarioInicio'] ?? '') . ' - ' . htmlspecialchars($evento['HorarioTermino'] ?? ''); ?></td>
+                                <td><?php echo htmlspecialchars($evento['LocalEvento'] ?? ''); ?></td>
+                                <td><?php echo htmlspecialchars($evento['NomeDepartamento'] ?? ''); ?></td>
+                                <td><?php echo htmlspecialchars($evento['Palestrante'] ?? 'Não informado'); ?></td>
+                                <td><?php echo htmlspecialchars($evento['CargaHoraria'] ?? '') . ' horas'; ?></td>
+                                <td><?php echo htmlspecialchars($evento['DescricaoEvento'] ?? ''); ?></td>
+                                <td><?php echo htmlspecialchars($evento['VagasDisponiveis'] ?? ''); ?></td>
+                                <td>
+                                    <a href="/Eventosfaculdade/src/views/eventos/editar.php?evento_id=<?php echo $evento['EventoId']; ?>" class="btn btn-warning btn-sm mb-1">Editar</a>
+                                    
+                                    <!-- Formulário de Exclusão com Senha Especial -->
+                                    <form method="POST" action="/Eventosfaculdade/src/controllers/ExcluirEventoController.php" style="display:inline;">
+                                        <input type="hidden" name="evento_id" value="<?php echo $evento['EventoId']; ?>">
+                                        <input type="password" name="senha_especial" class="form-control form-control-sm mb-1" placeholder="Senha Especial" required>
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este evento?')">Excluir</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         <?php else: ?>
             <div class="alert alert-warning text-center">
                 Nenhum evento cadastrado.
@@ -104,9 +110,8 @@ function formatarData($data) {
     </div>
 
     <!-- Footer -->
-    <footer class="custom-ocean text-white text-center py-3 mt-5">
-        <p class="m-0">&copy; 2024 Sistema de Eventos</p>
-    </footer>
+    <footer class="custom-ocean text-white text-center py-3 mt-5 fixed-bottom">
+    <p class="m-0">&copy; 2024 Sistema de Eventos</p>
 
     <!-- Bootstrap JS -->
     <script src="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>

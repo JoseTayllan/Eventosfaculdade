@@ -15,7 +15,7 @@ try {
         $id = intval($_POST['excluir_id']); // Garante que o ID é numérico
 
         // Query para deletar o departamento
-        $query = "DELETE FROM departamentos WHERE DepartamentoId = :id";
+        $query = "DELETE FROM Departamentos WHERE DepartamentoId = :id";
         $stmt = $db->prepare($query);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
@@ -31,7 +31,7 @@ try {
     }
 
     // Busca os departamentos no banco de dados
-    $query = "SELECT * FROM departamentos";
+    $query = "SELECT * FROM Departamentos";
     $stmt = $db->query($query);
     $departamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -49,6 +49,7 @@ try {
     <title>Admin - Departamentos</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+        <link rel="icon" type="image/x-icon" href="/Eventosfaculdade/public/uploads/fpm.ico">
     <style>
         body {
             background-color: #f8f9fa;

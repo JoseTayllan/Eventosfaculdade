@@ -7,8 +7,8 @@
     <title>Cadastrar Administrador</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/css/bootstrap.min.css">
-    <!-- CSS Customizado -->
     <link rel="stylesheet" href="/Eventosfaculdade/public/css/style.css">
+        <link rel="icon" type="image/x-icon" href="/Eventosfaculdade/public/uploads/fpm.ico">
 </head>
 <body>
     <!-- Header -->
@@ -21,6 +21,21 @@
     <div class="container mt-5" style="padding-bottom: 80px;">
         <div class="row justify-content-center">
             <div class="col-md-6">
+                <!-- Exibição de mensagens de feedback -->
+                <?php if (isset($_GET['status'])): ?>
+                    <div class="alert text-center <?php echo $_GET['status'] === 'success' ? 'alert-success' : 'alert-danger'; ?>">
+                        <?php
+                        if ($_GET['status'] === 'success') {
+                            echo "Administrador cadastrado com sucesso!";
+                        } elseif ($_GET['status'] === 'email_ja_existe') {
+                            echo "O e-mail informado já está em uso.";
+                        } else {
+                            echo "Erro ao cadastrar administrador. Tente novamente.";
+                        }
+                        ?>
+                    </div>
+                <?php endif; ?>
+
                 <!-- Card do Formulário -->
                 <div class="card shadow-lg">
                     <div class="card-body">
@@ -64,8 +79,8 @@
 
     <!-- Footer -->
     <footer class="custom-ocean text-white text-center py-3 mt-5 fixed-bottom">
-    <p class="m-0">&copy; 2024 Sistema de Eventos</p>
-</footer>
+        <p class="m-0">&copy; 2024 Sistema de Eventos</p>
+    </footer>
 
     <!-- Bootstrap JS -->
     <script src="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>

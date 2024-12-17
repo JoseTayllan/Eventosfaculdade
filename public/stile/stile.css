@@ -1,10 +1,9 @@
 /* Fundo personalizado */
 .custom-ocean {
-    background-color: #9181e4 !important;
+    background-image: linear-gradient(to right, #edebf5, hsl(198, 100%, 19%), #014B6A);
     color: white !important;
 }
-
 /* Texto personalizado */
 .custom-ocean -text {
-    color: #014B6A !important;
+    color: #014B6A !important;
 }

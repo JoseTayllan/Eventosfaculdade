@@ -55,6 +55,7 @@ try {
     <link rel="stylesheet" href="/Eventosfaculdade/public/stile/bootstrap-5.3.3-dist/css/bootstrap.min.css">
     <!-- CSS Customizado -->
     <link rel="stylesheet" href="/Eventosfaculdade/public/css/style.css">
+        <link rel="icon" type="image/x-icon" href="/Eventosfaculdade/public/uploads/fpm.ico">
 </head>
 <body>
     <!-- Header -->
@@ -131,6 +132,13 @@ try {
                     <?php endif; ?>
                     <input type="file" id="imagem" name="imagem" class="form-control mt-2">
                 </div>
+
+                <div class="col-md-12">
+                    <label for="cargaHoraria" class="form-label">Carga Horária:</label>
+                    <input type="number" id="cargaHoraria" name="carga_horaria" class="form-control" 
+                        value="<?php echo htmlspecialchars($evento['CargaHoraria']); ?>" required>
+                </div>
+
                 <div class="col-md-12">
                     <label for="descricao" class="form-label">Descrição:</label>
                     <textarea id="descricao" name="descricao" class="form-control" rows="4" required><?php echo htmlspecialchars($evento['DescricaoEvento']); ?></textarea>

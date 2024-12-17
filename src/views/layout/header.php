@@ -6,6 +6,7 @@
     <title>Sistema</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="public/stile/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+        <link rel="icon" type="image/x-icon" href="/Eventosfaculdade/public/uploads/fpm.ico">
 </head>
 <body>
     <!-- Header -->
