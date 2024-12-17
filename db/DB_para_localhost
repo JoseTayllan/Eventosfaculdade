@@ -1,0 +1,137 @@
+-- Criação do banco de dados
+CREATE DATABASE IF NOT EXISTS eventosacademicos;
+USE eventosacademicos;
+
+-- Estrutura para tabela `Banners`
+CREATE TABLE `Banners` (
+  `BannerId` int(11) NOT NULL AUTO_INCREMENT,
+  `ImagemBanner` varchar(255) NOT NULL,
+  `Titulo` varchar(255) DEFAULT NULL,
+  `DataCriacao` timestamp NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`BannerId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `Banners` (`BannerId`, `ImagemBanner`, `Titulo`, `DataCriacao`) VALUES
+(1, '/Eventosfaculdade/public/uploads/banner_67605e19cffc37.50621091.png', '.', '2024-12-16 17:06:33');
+
+-- Estrutura para tabela `Certificados`
+CREATE TABLE `Certificados` (
+  `CertificadoId` int(11) NOT NULL AUTO_INCREMENT,
+  `InscricaoId` int(11) DEFAULT NULL,
+  `ArquivoCertificado` longblob NOT NULL,
+  `DataEmissaoCertificado` datetime NOT NULL,
+  PRIMARY KEY (`CertificadoId`),
+  KEY `InscricaoId` (`InscricaoId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Estrutura para tabela `Configuracoes`
+CREATE TABLE `Configuracoes` (
+  `ConfiguracaoId` int(11) NOT NULL AUTO_INCREMENT,
+  `Chave` varchar(50) NOT NULL,
+  `Valor` text NOT NULL,
+  PRIMARY KEY (`ConfiguracaoId`),
+  UNIQUE KEY `Chave` (`Chave`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `Configuracoes` (`ConfiguracaoId`, `Chave`, `Valor`) VALUES
+(1, 'senha_especial', '$2y$10$hVKXm3A2JivliEbA7XTrDOad5NKmZ2XwpUl.c98A8Gy5/9AFjTvvC');
+
+-- Estrutura para tabela `Cursos`
+CREATE TABLE `Cursos` (
+  `CursoId` int(11) NOT NULL AUTO_INCREMENT,
+  `NomeCurso` varchar(100) NOT NULL,
+  PRIMARY KEY (`CursoId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Estrutura para tabela `CursosDepartamentos`
+CREATE TABLE `CursosDepartamentos` (
+  `CursoDepartamentoId` int(11) NOT NULL AUTO_INCREMENT,
+  `CursoId` int(11) DEFAULT NULL,
+  `DepartamentoId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`CursoDepartamentoId`),
+  KEY `CursoId` (`CursoId`),
+  KEY `DepartamentoId` (`DepartamentoId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Estrutura para tabela `CursosParticipantes`
+CREATE TABLE `CursosParticipantes` (
+  `CursoParticipanteId` int(11) NOT NULL AUTO_INCREMENT,
+  `CursoId` int(11) DEFAULT NULL,
+  `ParticipanteId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`CursoParticipanteId`),
+  KEY `CursoId` (`CursoId`),
+  KEY `ParticipanteId` (`ParticipanteId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Estrutura para tabela `Departamentos`
+CREATE TABLE `Departamentos` (
+  `DepartamentoId` int(11) NOT NULL AUTO_INCREMENT,
+  `NomeDepartamento` varchar(50) NOT NULL,
+  PRIMARY KEY (`DepartamentoId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `Departamentos` (`DepartamentoId`, `NomeDepartamento`) VALUES
+(1, 'GTI');
+
+-- Estrutura para tabela `Eventos`
+CREATE TABLE `Eventos` (
+  `EventoId` int(11) NOT NULL AUTO_INCREMENT,
+  `NomeEvento` varchar(100) NOT NULL,
+  `DataInicioEvento` datetime NOT NULL,
+  `DataFimEvento` datetime NOT NULL,
+  `HorarioInicio` time NOT NULL,
+  `HorarioTermino` time NOT NULL,
+  `LocalEvento` varchar(255) NOT NULL,
+  `CargaHoraria` int(11) NOT NULL,
+  `DescricaoEvento` text DEFAULT NULL,
+  `ImagemEvento` varchar(255) DEFAULT NULL,
+  `VagasDisponiveis` int(11) NOT NULL DEFAULT 0,
+  `TipoEvento` enum('Interno','Externo') NOT NULL,
+  `DepartamentoEventoId` int(11) DEFAULT NULL,
+  `Palestrante` varchar(255) DEFAULT NULL,
+  `ResponsavelEventoId` int(11) DEFAULT NULL,
+  `InstituicaoParceira` varchar(255) DEFAULT NULL,
+  `PalestranteId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`EventoId`),
+  KEY `DepartamentoEventoId` (`DepartamentoEventoId`),
+  KEY `FK_Palestrante` (`PalestranteId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `Eventos` (`EventoId`, `NomeEvento`, `DataInicioEvento`, `DataFimEvento`, `HorarioInicio`, `HorarioTermino`, `LocalEvento`, `CargaHoraria`, `DescricaoEvento`, `ImagemEvento`, `VagasDisponiveis`, `TipoEvento`, `DepartamentoEventoId`, `Palestrante`) VALUES
+(2, 'Introdução a IOT', '2024-12-17 00:00:00', '2024-12-17 00:00:00', '15:09:00', '18:09:00', 'Laboratório-FPM', 10, 'Introdução ao curso de IOT', '/Eventosfaculdade/public/uploads/evento_67605f047ab981.62038605.jpg', 4, 'Interno', 1, 'Jonas Kunzler');
+
+-- Estrutura para tabela `Inscricoes`
+CREATE TABLE `Inscricoes` (
+  `InscricaoId` int(11) NOT NULL AUTO_INCREMENT,
+  `EventoId` int(11) DEFAULT NULL,
+  `ParticipanteId` int(11) DEFAULT NULL,
+  `DataInscricao` datetime DEFAULT current_timestamp(),
+  `Compareceu` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`InscricaoId`),
+  KEY `EventoId` (`EventoId`),
+  KEY `ParticipanteId` (`ParticipanteId`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `Inscricoes` (`InscricaoId`, `EventoId`, `ParticipanteId`, `DataInscricao`, `Compareceu`) VALUES
+(5, 2, 2, '2024-12-17 10:57:21', 0);
+
+-- Estrutura para tabela `Participantes`
+CREATE TABLE `Participantes` (
+  `ParticipanteId` int(11) NOT NULL AUTO_INCREMENT,
+  `NomeParticipante` varchar(100) NOT NULL,
+  `EmailParticipante` varchar(100) NOT NULL,
+  `TipoParticipante` enum('Interno','Externo','Admin') NOT NULL,
+  `NumeroMatricula` varchar(20) DEFAULT NULL,
+  `CPF` varchar(11) DEFAULT NULL,
+  `SenhaParticipante` varchar(255) NOT NULL,
+  `DepartamentoParticipanteId` int(11) DEFAULT NULL,
+  `TelefoneParticipante` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`ParticipanteId`),
+  UNIQUE KEY `EmailParticipante` (`EmailParticipante`,`CPF`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `Participantes` (`ParticipanteId`, `NomeParticipante`, `EmailParticipante`, `TipoParticipante`, `NumeroMatricula`, `CPF`, `SenhaParticipante`, `TelefoneParticipante`) VALUES
+(1, 'admin', 'admin@example.com', 'Admin', NULL, NULL, '$2y$10$wMUfHvP0v64YWQ9sOesgTe9cW1QAq18vTeqpoeh9XpXjPDkyGos1e', NULL),
+(2, 'Teste ', 'teste@gmail.com', 'Externo', NULL, '05974378159', '$2y$10$9n1bP9bPjgKMx7BtbjBkR.Ij4awFrAlLkXWfovXSQdufKuImW47b.', '62993041722');
+
+COMMIT;

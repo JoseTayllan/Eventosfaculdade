@@ -13,37 +13,39 @@
 </head>
 <body>
     <!-- Header -->
-    <header class="custom-ocean text-white text-center py-3">
-        <h1>Sistema de Eventos Acadêmicos</h1>
-        <nav class="navbar navbar-expand-lg navbar-dark custom-ocean">
-            <div class="container">
-                <!-- Logo -->
-                <a href="#" class="navbar-brand d-flex align-items-center">
-                    <img src="/Eventosfaculdade/public/uploads/Logo_FPM.png" alt="Logo" class="me-2" style="height: 70px;"> 
-                    
-                </a>
-                <!-- Navbar Toggler -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <!-- Navbar Links -->
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="btn btn-outline-light btn-sm mx-1" href="/Eventosfaculdade/src/views/usuarios/login.php">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-outline-light btn-sm mx-1" href="/Eventosfaculdade/src/views/usuarios/register.php">Cadastrar-se</a>
-                        </li>
-                        <li class="nav-item">
-                            <!-- Botão Admin -->
-                            <a class="btn btn-outline-light btn-sm mx-1" href="/Eventosfaculdade/src/views/admin/login.php">Admin</a>
-                        </li>
-                    </ul>
-                </div>
+    <header class="custom-ocean text-white text-center py-0">
+    <h3 class="mb-0">Sistema de Eventos Acadêmicos</h3>
+    <p class="small mt-1">FPM - Faculdade de Princípios Militares</p>
+    <nav class="navbar navbar-expand-lg navbar-dark custom-ocean">
+        <div class="container">
+            <!-- Logo -->
+            <a href="#" class="navbar-brand d-flex align-items-center">
+                <img src="/Eventosfaculdade/public/uploads/Logo_FPM.png" 
+                     alt="Logo" class="me-2 logo-responsive" style="height: 60px;">
+            </a>
+            <!-- Navbar Toggler -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navbar Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light btn-sm mx-1" href="/Eventosfaculdade/src/views/usuarios/login.php">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light btn-sm mx-1" href="/Eventosfaculdade/src/views/usuarios/register.php">Cadastrar-se</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- Botão Admin -->
+                        <a class="btn btn-outline-light btn-sm mx-1" href="/Eventosfaculdade/src/views/admin/login.php">Admin</a>
+                    </li>
+                </ul>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
+
 
     <!-- Conteúdo Principal -->
     <main>

@@ -3,7 +3,14 @@
     background-image: linear-gradient(to right, #edebf5, hsl(198, 100%, 19%), #014B6A);
     color: white !important;
 }
+
 /* Texto personalizado */
-.custom-ocean -text {
-    color: #014B6A !important;
+.custom-ocean-text {
+    color: #014B6A !important;
+}
+
+@media (max-width: 768px) {
+    .logo-responsive {
+        height: 40px !important; /* Ajuste o tamanho conforme necessário */
+    }
 }
